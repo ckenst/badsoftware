@@ -1,16 +1,46 @@
-/* Minimal styles for The Bad Software Company */
-:root{--bg:#0f1724;--card:#0b1220;--text:#e6eef8;--accent:#ff6b6b}
+/* The Bad Software Company — themeable styles */
+:root{
+  --bg:#0f1724;
+  --card:#0b1220;
+  --text:#e6eef8;
+  --muted:rgba(230,238,248,0.8);
+  --accent:#ff6b6b;
+  --header-bg:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+}
+
+/* Light theme overrides */
+.theme-light{
+  --bg:#f7f7fb;
+  --card:#ffffff;
+  --text:#0b1220;
+  --muted:rgba(11,18,32,0.7);
+  --accent:#0070f3;
+  --header-bg:linear-gradient(90deg, rgba(0,0,0,0.02), rgba(0,0,0,0.01));
+}
+
 *{box-sizing:border-box}
-body{font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; margin:0; background:var(--bg); color:var(--text); line-height:1.5}
+body{font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; margin:0; background:var(--bg); color:var(--text); line-height:1.6; transition:background-color 220ms ease,color 220ms ease}
 .container{max-width:900px;margin:0 auto;padding:2rem}
-.site-header{background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:1rem 0}
+.site-header{background:var(--header-bg);padding:1rem 0}
 .site-header .container{display:flex;align-items:center;justify-content:space-between}
 .logo{margin:0;font-size:1.1rem}
 nav a{color:var(--text);text-decoration:none;margin-left:1rem}
+
+/* Theme toggle button */
+.theme-toggle{margin-left:1rem;background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text);padding:0.4rem 0.6rem;border-radius:6px;cursor:pointer;font-size:1rem}
+.theme-light .theme-toggle{border-color:rgba(11,18,32,0.06)}
+
 .hero{padding:3rem 0}
 .hero h2{margin:0 0 0.5rem;font-size:2rem}
 .cta{display:inline-block;background:var(--accent);color:#fff;padding:0.6rem 1rem;border-radius:6px;text-decoration:none}
 .highlights{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:1.5rem}
-.highlights article{background:rgba(255,255,255,0.02);padding:1rem;border-radius:8px}
-.site-footer{border-top:1px solid rgba(255,255,255,0.03);margin-top:2rem;padding:1rem 0;text-align:center}
+.highlights article{background:var(--card);padding:1rem;border-radius:8px;color:var(--text);box-shadow:0 1px 0 rgba(0,0,0,0.04)}
+.clients{margin-top:1.5rem;background:transparent;padding:1rem}
+.site-footer{border-top:1px solid rgba(0,0,0,0.06);margin-top:2rem;padding:1rem 0;text-align:center;color:var(--muted)}
+
 @media (max-width:600px){.site-header .container{flex-direction:column;align-items:flex-start}nav{margin-top:0.5rem}}
+
+/* Provide a sensible default for users without JS: prefer light/dark media query */
+@media (prefers-color-scheme: light) {
+  :root{--bg:#f7f7fb;--card:#ffffff;--text:#0b1220;--muted:rgba(11,18,32,0.7);--accent:#0070f3}
+}
