@@ -8,7 +8,7 @@
   --header-bg:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
 }
 
-/* Light theme overrides */
+/* Light theme overrides (class) */
 .theme-light{
   --bg:#f7f7fb;
   --card:#ffffff;
@@ -16,6 +16,24 @@
   --muted:rgba(11,18,32,0.7);
   --accent:#0070f3;
   --header-bg:linear-gradient(90deg, rgba(0,0,0,0.02), rgba(0,0,0,0.01));
+}
+
+/* Stronger selector: data attribute on html element. Placed after :root to ensure it overrides */
+html[data-theme="light"]{
+  --bg:#f7f7fb;
+  --card:#ffffff;
+  --text:#0b1220;
+  --muted:rgba(11,18,32,0.7);
+  --accent:#0070f3;
+  --header-bg:linear-gradient(90deg, rgba(0,0,0,0.02), rgba(0,0,0,0.01));
+}
+html[data-theme="dark"]{
+  --bg:#0f1724;
+  --card:#0b1220;
+  --text:#e6eef8;
+  --muted:rgba(230,238,248,0.8);
+  --accent:#ff6b6b;
+  --header-bg:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
 }
 
 *{box-sizing:border-box}
