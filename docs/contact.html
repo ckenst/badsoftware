@@ -23,13 +23,24 @@
 
   <main class="container">
     <h2>Contact</h2>
-    <p>We'd love to hear from you. Email us at <a href="mailto:hello@badsoftware.com">hello@badsoftware.com</a>.</p>
-    <p>Or reach out on Twitter: <a href="https://twitter.com/badsoftware" target="_blank" rel="noopener">@badsoftware</a> (if that handle exists).</p>
+    <form id="contact-form" action="#" method="post" novalidate>
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="message">Message</label>
+      <textarea id="message" name="message" rows="6" required></textarea>
+
+      <p><button type="submit" class="cta">Send message</button></p>
+    </form>
+    <p class="muted">Form is not hooked up yet.</p>
   </main>
 
   <footer class="site-footer">
     <div class="container">
-      <p>&copy; The Bad Software Company</p>
+      <p>&copy; 2026 and beyond The Bad Software Company</p>
     </div>
   </footer>
 </body>
