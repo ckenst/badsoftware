@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Contact — The Bad Software Company</title>
+  <title>Blog — The Bad Software Company</title>
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/style.css">
 <script src="/assets/theme.js" defer></script>
@@ -24,26 +24,16 @@
   </header>
 
   <main class="container">
-    <h2>Contact</h2>
-    <form id="contact-form" action="#" method="post">
-      <p class="field">
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" autocomplete="name" required>
-      </p>
+    <h2>Blog</h2>
+    <p>Notes from The Bad Software Company team.</p>
 
-      <p class="field">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" autocomplete="email" required>
-      </p>
-
-      <p class="field">
-        <label for="message">Message</label>
-        <textarea id="message" name="message" rows="6" required></textarea>
-      </p>
-
-      <p><button type="submit" class="cta">Send message</button></p>
-    </form>
-    <p class="muted">Form is not hooked up yet.</p>
+    <section class="blog-list" aria-label="Blog posts">
+      <article class="blog-card">
+        <h3><a href="/blog/hello-world.html">Hello, world</a></h3>
+        <p class="blog-meta">June 14, 2026</p>
+        <p>Our first post is live.</p>
+      </article>
+    </section>
   </main>
 
   <footer class="site-footer">

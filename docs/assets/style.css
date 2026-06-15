@@ -60,11 +60,26 @@ nav a{color:var(--text);text-decoration:none;margin-right:1rem;display:inline-bl
 .cta{display:inline-block;background:var(--accent);color:#fff;padding:0.6rem 1rem;border-radius:6px;text-decoration:none}
 .highlights{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:1.5rem}
 .highlights article{background:var(--card);padding:1rem;border-radius:8px;color:var(--text);box-shadow:0 1px 0 rgba(0,0,0,0.04)}
+#contact-form{max-width:680px}
+#contact-form .field{margin:0 0 1rem}
+#contact-form label{display:block;font-weight:600;margin-bottom:0.4rem}
+#contact-form input,
+#contact-form textarea{width:100%;padding:0.65rem 0.75rem;border-radius:8px;border:1px solid rgba(255,255,255,0.18);background:var(--card);color:var(--text);font:inherit}
+#contact-form textarea{resize:vertical}
+#contact-form input:focus,
+#contact-form textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
+.muted{color:var(--muted)}
 .clients{margin-top:1.5rem;background:transparent;padding:1rem}
 .client-logos{list-style:none;padding:0;margin:1rem 0 0;display:grid;grid-template-columns:1fr;gap:1rem}
 .client-logos li{background:var(--card);border-radius:8px;padding:1rem}
 .client-logos a{display:flex;align-items:center;justify-content:center;min-height:56px}
 .client-logos img{max-width:100%;max-height:42px;width:auto;height:auto;display:block}
+.blog-list{display:grid;gap:1rem;margin-top:1rem}
+.blog-card{background:var(--card);border-radius:8px;padding:1rem}
+.blog-card h3{margin:0 0 0.4rem}
+.blog-card h3 a{color:var(--text);text-decoration:none}
+.blog-meta{color:var(--muted);font-size:0.95rem}
+.blog-post{max-width:740px}
 .site-footer{border-top:1px solid rgba(0,0,0,0.06);margin-top:2rem;padding:1rem 0;text-align:center;color:var(--muted)}
 
 @media (min-width:600px){
