@@ -44,6 +44,12 @@ body{font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica
 .logo{margin:0;line-height:0}
 .logo a{display:inline-block}
 .logo img{display:block;width:180px;max-width:100%;height:auto}
+.logo .logo-light{display:none}
+.logo .logo-dark{display:block}
+html[data-theme="light"] .logo .logo-light{display:block}
+html[data-theme="light"] .logo .logo-dark{display:none}
+html[data-theme="dark"] .logo .logo-light{display:none}
+html[data-theme="dark"] .logo .logo-dark{display:block}
 nav{margin-top:0.5rem}
 nav a{color:var(--text);text-decoration:none;margin-right:1rem;display:inline-block}
 
@@ -93,4 +99,6 @@ nav a{color:var(--text);text-decoration:none;margin-right:1rem;display:inline-bl
 /* Provide a sensible default for users without JS: prefer light/dark media query */
 @media (prefers-color-scheme: light) {
   :root{--bg:#f7f7fb;--card:#ffffff;--text:#0b1220;--muted:rgba(11,18,32,0.7);--accent:#0070f3}
+  html:not([data-theme]) .logo .logo-light{display:block}
+  html:not([data-theme]) .logo .logo-dark{display:none}
 }
