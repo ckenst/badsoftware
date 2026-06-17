@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Blog — The Bad Software Company</title>
+  <meta name="description" content="How to write blog posts using simple text files.">
+  <title>Writing Blog Posts the Easy Way — The Bad Software Company Blog</title>
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/style.css">
 <script src="/assets/theme.js" defer></script>
@@ -24,21 +25,15 @@
   </header>
 
   <main class="container">
-    <h2>Blog</h2>
-    <p>Notes from The Bad Software Company team.</p>
-
-    <section class="blog-list" aria-label="Blog posts">
-      <article class="blog-card">
-        <h3><a href="/blog/text-to-blog.html">Writing Blog Posts the Easy Way</a></h3>
-        <p class="blog-meta">June 17, 2026</p>
-        <p>How to write blog posts using simple text files.</p>
-      </article>
-      <article class="blog-card">
-        <h3><a href="/blog/hello-world.html">Hello, world</a></h3>
-        <p class="blog-meta">June 14, 2026</p>
-        <p>Welcome to the Bad Software Company blog.</p>
-      </article>
-    </section>
+    <article class="blog-post">
+      <p><a href="/blog/index.html">&larr; Back to blog</a></p>
+      <h2>Writing Blog Posts the Easy Way</h2>
+      <p class="blog-meta">Published June 17, 2026</p>
+      <p>I wanted to make it easier to write blog posts for this site. Instead of writing HTML, I can now just write plain text files.</p>
+      <p>Each text file contains metadata at the top (title, date, slug, and excerpt) followed by the content. The content is just paragraphs separated by blank lines.</p>
+      <p>A simple Python script converts these text files into HTML blog posts that match the site's style. It also automatically updates the blog index page.</p>
+      <p>Now I can focus on writing content instead of dealing with HTML tags and template boilerplate!</p>
+    </article>
   </main>
 
   <footer class="site-footer">
