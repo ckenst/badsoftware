@@ -81,7 +81,7 @@ def generate_html(metadata, content):
 
   <footer class="site-footer">
     <div class="container">
-      <p>&copy; 2026 and beyond The Bad Software Company</p>
+      <p>&copy; 2026 The Bad Software Company</p>
     </div>
   </footer>
 </body>
@@ -143,7 +143,7 @@ def generate_index(posts):
 
   <footer class="site-footer">
     <div class="container">
-      <p>&copy; 2026 and beyond The Bad Software Company</p>
+      <p>&copy; 2026 The Bad Software Company</p>
     </div>
   </footer>
 </body>
