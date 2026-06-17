@@ -1,0 +1,10 @@
+title: Your Post Title Here
+date: YYYY-MM-DD
+slug: url-friendly-slug
+excerpt: A brief one-sentence description of your post.
+---
+Write your first paragraph here.
+
+Add more paragraphs by separating them with blank lines.
+
+You can write as many paragraphs as you need.
