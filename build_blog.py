@@ -134,7 +134,7 @@ def generate_index(posts):
 
   <main class="container">
     <h2>Blog</h2>
-    <p>Notes from The Bad Software Company team.</p>
+    <p>The latest from The Bad Software Company:</p>
 
     <section class="blog-list" aria-label="Blog posts">
 {cards_html}
