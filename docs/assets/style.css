@@ -69,6 +69,15 @@ nav a{color:var(--text);text-decoration:none;margin-right:1rem;display:inline-bl
 .cta{display:inline-block;background:var(--accent);color:#fff;padding:0.6rem 1rem;border-radius:6px;text-decoration:none}
 .highlights{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:1.5rem}
 .highlights article{background:var(--card);padding:1rem;border-radius:8px;color:var(--text);box-shadow:0 1px 0 rgba(0,0,0,0.04)}
+.service-link{color:var(--accent);font-weight:600;text-decoration:none}
+.service-link:hover{text-decoration:underline}
+.service-detail{margin-top:2.5rem;padding-top:1rem;border-top:1px solid rgba(127,127,127,0.25);scroll-margin-top:1rem}
+.service-detail h3{margin-top:1.75rem}
+.service-detail h3:first-child{margin-top:0}
+.service-pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1rem 0}
+.service-pillars article{background:var(--card);border-radius:8px;padding:1rem}
+.service-pillars h4{margin-top:0}
+.deliverables{padding-left:1.25rem}
 #contact-form{max-width:680px}
 #contact-form .field{margin:0 0 1rem}
 #contact-form label{display:block;font-weight:600;margin-bottom:0.4rem}
