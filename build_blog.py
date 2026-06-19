@@ -58,7 +58,7 @@ def generate_html(metadata, content):
 <body>
   <header class="site-header">
     <div class="container">
-      <h1 class="logo"><a href="/index.html" aria-label="The Bad Software Company home"><img class="logo-light" src="/assets/light-logo.png" alt="The Bad Software Company"><img class="logo-dark" src="/assets/dark-logo.png" alt="The Bad Software Company"></a></h1>
+      <h1 class="logo"><a href="/index.html" aria-label="The Bad Software Company home"><img class="logo-light" src="/assets/logos/light_background.png" alt="The Bad Software Company"><img class="logo-dark" src="/assets/logos/dark_background.png" alt="The Bad Software Company"></a></h1>
       <nav>
         <a href="/index.html">Home</a>
         <a href="/about.html">About</a>
@@ -120,7 +120,7 @@ def generate_index(posts):
 <body>
   <header class="site-header">
     <div class="container">
-      <h1 class="logo"><a href="/index.html" aria-label="The Bad Software Company home"><img class="logo-light" src="/assets/light-logo.png" alt="The Bad Software Company"><img class="logo-dark" src="/assets/dark-logo.png" alt="The Bad Software Company"></a></h1>
+      <h1 class="logo"><a href="/index.html" aria-label="The Bad Software Company home"><img class="logo-light" src="/assets/logos/light_background.png" alt="The Bad Software Company"><img class="logo-dark" src="/assets/logos/dark_background.png" alt="The Bad Software Company"></a></h1>
       <nav>
         <a href="/index.html">Home</a>
         <a href="/about.html">About</a>
