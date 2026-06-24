@@ -1,7 +1,12 @@
 (function(){
-  const KEY = 'badsw-theme';
-  const btnId = 'theme-toggle';
+  const KEY = 'badsw-theme-test-override';
+  const LEGACY_KEY = 'badsw-theme';
   const root = document.documentElement; // html element
+  const lightPreference = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)');
+
+  try{
+    localStorage.removeItem(LEGACY_KEY);
+  }catch(e){/* ignore */}
 
   function apply(theme){
     if(theme === 'light'){
@@ -13,39 +18,62 @@
       root.classList.add('theme-dark');
       root.setAttribute('data-theme','dark');
     }
-    updateButton(theme);
   }
 
   function preferred(){
     const stored = localStorage.getItem(KEY);
     if(stored) return stored;
-    return window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    return lightPreference && lightPreference.matches ? 'light' : 'dark';
   }
 
-  function updateButton(theme){
-    const btn = document.getElementById(btnId);
-    if(!btn) return;
-    btn.setAttribute('aria-pressed', theme === 'light');
-    btn.textContent = theme === 'light' ? '☀️' : '🌙';
+  function setOverride(theme){
+    if(theme === 'light' || theme === 'dark'){
+      localStorage.setItem(KEY, theme);
+      apply(theme);
+      return theme;
+    }
+
+    localStorage.removeItem(KEY);
+    apply(preferred());
+    return 'system';
   }
 
   function toggle(){
-    const current = localStorage.getItem(KEY) || (root.classList.contains('theme-light') ? 'light' : 'dark');
+    const current = localStorage.getItem(KEY) || preferred();
     const next = current === 'light' ? 'dark' : 'light';
-    localStorage.setItem(KEY, next);
-    apply(next);
+    return setOverride(next);
   }
 
   // Apply immediately so variables take effect before paint (reduces flash)
   try{
-    apply(preferred());
+    const testTheme = new URLSearchParams(window.location.search).get('theme');
+    if(testTheme === 'light' || testTheme === 'dark' || testTheme === 'system'){
+      setOverride(testTheme);
+    } else {
+      apply(preferred());
+    }
   }catch(e){/* ignore */}
 
-  // Wire up the button when DOM is ready
-  document.addEventListener('DOMContentLoaded', function(){
-    const btn = document.getElementById(btnId);
-    if(btn) btn.addEventListener('click', toggle);
-    // Ensure button reflects current state
-    updateButton(localStorage.getItem(KEY) || (root.classList.contains('theme-light') ? 'light' : (root.getAttribute('data-theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'))));
-  });
+  if(lightPreference){
+    const onPreferenceChange = function(){
+      if(!localStorage.getItem(KEY)) apply(preferred());
+    };
+
+    if(lightPreference.addEventListener){
+      lightPreference.addEventListener('change', onPreferenceChange);
+    } else if(lightPreference.addListener){
+      lightPreference.addListener(onPreferenceChange);
+    }
+  }
+
+  window.badSoftwareTheme = {
+    set: setOverride,
+    toggle: toggle,
+    system: function(){
+      return setOverride('system');
+    },
+    current: function(){
+      return root.getAttribute('data-theme');
+    }
+  };
 })();

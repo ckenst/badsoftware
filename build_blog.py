@@ -66,7 +66,6 @@ def generate_html(metadata, content):
         <a href="/blog/index.html">Blog</a>
         <a href="/contact.html">Contact Us</a>
       </nav>
-      <button id="theme-toggle" class="theme-toggle" aria-pressed="false" aria-label="Toggle theme">🌙</button>
     </div>
   </header>
 
@@ -128,7 +127,6 @@ def generate_index(posts):
         <a href="/blog/index.html">Blog</a>
         <a href="/contact.html">Contact Us</a>
       </nav>
-      <button id="theme-toggle" class="theme-toggle" aria-pressed="false" aria-label="Toggle theme">🌙</button>
     </div>
   </header>
 

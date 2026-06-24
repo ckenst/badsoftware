@@ -55,3 +55,10 @@ python3 -m http.server 8000 --directory docs
 
 Then visit http://localhost:8000
 
+### Theme Testing
+
+The site follows the computer's light/dark appearance setting by default. To test a specific theme locally, add one of these query parameters:
+
+- `http://localhost:8000/?theme=light`
+- `http://localhost:8000/?theme=dark`
+- `http://localhost:8000/?theme=system`
