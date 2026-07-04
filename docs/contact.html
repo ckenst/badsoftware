@@ -24,7 +24,7 @@
 
   <main class="container">
     <h2>Contact</h2>
-    <form id="contact-form" action="#" method="post">
+    <form id="contact-form" action="mailto:hello@badsoftware.com?subject=Website%20contact" method="post" enctype="text/plain">
       <p class="field">
         <label for="name">Name</label>
         <input type="text" id="name" name="name" autocomplete="name" required>
@@ -42,8 +42,28 @@
 
       <p><button type="submit" class="cta">Send message</button></p>
     </form>
-    <p class="muted">Form is not hooked up yet.</p>
   </main>
+
+  <script>
+    document.getElementById('contact-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const form = event.currentTarget;
+      const name = form.elements.name.value.trim();
+      const email = form.elements.email.value.trim();
+      const message = form.elements.message.value.trim();
+      const subject = name ? `Website contact from ${name}` : 'Website contact';
+      const body = [
+        `Name: ${name}`,
+        `Email: ${email}`,
+        '',
+        'Message:',
+        message
+      ].join('\n');
+
+      window.location.href = `mailto:hello@badsoftware.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    });
+  </script>
 
   <footer class="site-footer">
     <div class="container">
