@@ -73,9 +73,14 @@ nav a:focus-visible{background:rgba(127,127,127,0.14);outline:none}
 .news-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%, 220px),1fr));gap:1rem}
 .highlights{margin-top:1.5rem}
 .highlights article,
+.service-card,
 .news-card{background:var(--card);padding:1rem;border-radius:8px;color:var(--text);box-shadow:0 1px 0 rgba(0,0,0,0.04)}
-.service-link{color:var(--accent);font-weight:600;text-decoration:none}
-.service-link:hover{text-decoration:underline}
+.service-card{display:flex;min-height:190px;flex-direction:column;text-decoration:none;transition:box-shadow 160ms ease,transform 160ms ease}
+.service-card:hover,
+.service-card:focus-visible{box-shadow:0 10px 24px rgba(0,0,0,0.16);transform:translateY(-2px);outline:none}
+.service-card h4{margin:0 0 0.5rem;font-size:1.15rem;line-height:1.25}
+.service-card p{margin:0;color:var(--muted)}
+.service-card span{display:block;margin-top:auto;padding-top:1rem;color:var(--accent);font-weight:600}
 .service-detail{margin-top:2.5rem;padding-top:1rem;border-top:1px solid rgba(127,127,127,0.25);scroll-margin-top:1rem}
 .service-detail h3{margin-top:1.75rem}
 .service-detail h3:first-child{margin-top:0}
@@ -119,6 +124,7 @@ nav a:focus-visible{background:rgba(127,127,127,0.14);outline:none}
   nav a{flex:1 1 calc(50% - 0.45rem);justify-content:center;text-align:center;background:rgba(127,127,127,0.08)}
   .hero p{font-size:1.05rem}
   .highlights article,
+  .service-card,
   .news-card,
   .blog-card,
   .service-pillars article{padding:0.9rem}
