@@ -84,11 +84,17 @@ nav a{color:var(--text);text-decoration:none;margin-right:1rem;display:inline-bl
 #contact-form input:focus,
 #contact-form textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
 .muted{color:var(--muted)}
-.clients{margin-top:1.5rem;background:transparent;padding:1rem}
-.client-logos{list-style:none;padding:0;margin:1rem 0 0;display:grid;grid-template-columns:1fr;gap:1rem}
-.client-logos li{background:transparent;border-radius:8px;padding:1rem}
-.client-logos a{display:flex;align-items:center;justify-content:center;min-height:56px}
-.client-logos img{max-width:100%;max-height:42px;width:auto;height:auto;display:block}
+.latest-news{margin-top:1.5rem;padding:1rem 0}
+.section-heading{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-bottom:1rem}
+.section-heading h3{margin:0}
+.section-link{color:var(--accent);font-weight:600;text-decoration:none;white-space:nowrap}
+.section-link:hover{text-decoration:underline}
+.news-grid{display:grid;grid-template-columns:1fr;gap:1rem}
+.news-card{display:block;min-height:180px;background:var(--card);border:1px solid rgba(127,127,127,0.2);border-radius:8px;padding:1.1rem;color:var(--text);text-decoration:none;box-shadow:0 1px 0 rgba(0,0,0,0.04);transition:border-color 160ms ease,box-shadow 160ms ease,transform 160ms ease}
+.news-card:hover,
+.news-card:focus-visible{border-color:var(--accent);box-shadow:0 10px 24px rgba(0,0,0,0.16);transform:translateY(-2px);outline:none}
+.news-card h4{margin:0.45rem 0 0.5rem;font-size:1.15rem;line-height:1.25}
+.news-card p{margin:0;color:var(--muted)}
 .blog-list{display:grid;gap:1rem;margin-top:1rem}
 .blog-card{background:var(--card);border-radius:8px;padding:1rem}
 .blog-card h3{margin:0 0 0.4rem}
@@ -98,7 +104,7 @@ nav a{color:var(--text);text-decoration:none;margin-right:1rem;display:inline-bl
 .site-footer{border-top:1px solid rgba(0,0,0,0.06);margin-top:2rem;padding:1rem 0;text-align:center;color:var(--muted)}
 
 @media (min-width:600px){
-  .client-logos{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .news-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 
 
