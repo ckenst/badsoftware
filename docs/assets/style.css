@@ -37,35 +37,40 @@ html[data-theme="dark"]{
 }
 
 *{box-sizing:border-box}
-body{font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; margin:0; background:var(--bg); color:var(--text); line-height:1.6; transition:background-color 220ms ease,color 220ms ease}
-.container{max-width:900px;margin:0 auto;padding:1rem}
-.site-header{background:var(--header-bg);padding:0.75rem 0}
-.site-header .container{display:block}
+html{font-size:16px;-webkit-text-size-adjust:100%}
+body{font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; margin:0; background:var(--bg); color:var(--text); line-height:1.6; overflow-x:hidden; transition:background-color 220ms ease,color 220ms ease}
+img{max-width:100%;height:auto}
+a{overflow-wrap:anywhere}
+.container{width:min(100%, 900px);margin:0 auto;padding:1rem}
+.site-header{background:var(--header-bg);padding:0.4rem 0}
+.site-header .container{display:flex;flex-direction:column;gap:0.75rem}
 .logo{margin:0;line-height:0}
 .logo a{display:inline-block}
-.logo img{display:block;width:180px;max-width:100%;height:auto}
+.logo img{display:block;width:160px;max-width:100%;height:auto}
 .logo .logo-light{display:none}
 .logo .logo-dark{display:block}
 html[data-theme="light"] .logo .logo-light{display:block}
 html[data-theme="light"] .logo .logo-dark{display:none}
 html[data-theme="dark"] .logo .logo-light{display:none}
 html[data-theme="dark"] .logo .logo-dark{display:block}
-nav{margin-top:0.5rem}
-nav a{color:var(--text);text-decoration:none;margin-right:1rem;display:inline-block}
+nav{display:flex;flex-wrap:wrap;gap:0.45rem}
+nav a{color:var(--text);text-decoration:none;display:inline-flex;align-items:center;min-height:2.5rem;padding:0.35rem 0.65rem;border-radius:6px;line-height:1.2}
+nav a:hover,
+nav a:focus-visible{background:rgba(127,127,127,0.14);outline:none}
 
 @media (min-width:600px){
   .container{padding:2rem}
   .site-header .container{display:flex;align-items:center;justify-content:space-between}
   .logo img{width:220px}
-  nav{margin-top:0}
-  nav a{margin-left:1rem;margin-right:0;display:inline-block}
+  nav{justify-content:flex-end}
+  nav a{min-height:2.25rem;padding:0.25rem 0.15rem}
 }
 
-.hero{padding:3rem 0}
-.hero h2{margin:0 0 0.5rem;font-size:2rem}
-.cta{display:inline-block;background:var(--accent);color:#fff;padding:0.6rem 1rem;border-radius:6px;text-decoration:none}
+.hero{padding:2rem 0}
+.hero h2{margin:0 0 0.5rem;font-size:clamp(1.75rem, 8vw, 2.75rem);line-height:1.1}
+.cta{display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;background:var(--accent);color:#fff;padding:0.65rem 1rem;border:0;border-radius:6px;text-decoration:none;font:inherit;font-weight:600;cursor:pointer}
 .highlights,
-.news-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+.news-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%, 220px),1fr));gap:1rem}
 .highlights{margin-top:1.5rem}
 .highlights article,
 .news-card{background:var(--card);padding:1rem;border-radius:8px;color:var(--text);box-shadow:0 1px 0 rgba(0,0,0,0.04)}
@@ -74,7 +79,7 @@ nav a{color:var(--text);text-decoration:none;margin-right:1rem;display:inline-bl
 .service-detail{margin-top:2.5rem;padding-top:1rem;border-top:1px solid rgba(127,127,127,0.25);scroll-margin-top:1rem}
 .service-detail h3{margin-top:1.75rem}
 .service-detail h3:first-child{margin-top:0}
-.service-pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1rem 0}
+.service-pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%, 220px),1fr));gap:1rem;margin:1rem 0}
 .service-pillars article{background:var(--card);border-radius:8px;padding:1rem}
 .service-pillars h4{margin-top:0}
 .deliverables{padding-left:1.25rem}
@@ -105,6 +110,29 @@ nav a{color:var(--text);text-decoration:none;margin-right:1rem;display:inline-bl
 .blog-meta{color:var(--muted);font-size:0.95rem}
 .blog-post{max-width:740px}
 .site-footer{border-top:1px solid rgba(0,0,0,0.06);margin-top:2rem;padding:1rem 0;text-align:center;color:var(--muted)}
+
+@media (max-width:599px){
+  h2{font-size:1.65rem;line-height:1.2}
+  h3{font-size:1.25rem;line-height:1.25}
+  .site-header .container{align-items:flex-start}
+  nav{width:100%}
+  nav a{flex:1 1 calc(50% - 0.45rem);justify-content:center;text-align:center;background:rgba(127,127,127,0.08)}
+  .hero p{font-size:1.05rem}
+  .highlights article,
+  .news-card,
+  .blog-card,
+  .service-pillars article{padding:0.9rem}
+  .section-heading{align-items:center}
+  #contact-form input,
+  #contact-form textarea{font-size:16px}
+}
+
+@media (max-width:360px){
+  .container{padding:0.85rem}
+  .logo img{width:145px}
+  .section-heading{display:block}
+  .section-link{display:inline-block;margin-top:0.35rem}
+}
 
 /* Provide a sensible default for users without JS: prefer light/dark media query */
 @media (prefers-color-scheme: light) {
