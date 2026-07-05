@@ -41,6 +41,8 @@ This will:
 - Process all `.txt` files in the `posts/` directory
 - Generate HTML files in `docs/blog/` 
 - Update the blog index page at `docs/blog/index.html`
+- Generate the crawler sitemap at `docs/sitemap.xml`
+- Generate the agent-friendly site index at `docs/llms.txt`
 
 ### Updating Posts
 

@@ -4,12 +4,12 @@ Build blog posts from text files in posts/ directory.
 Converts text files to HTML blog posts and updates the blog index.
 """
 
-import os
-import re
+import xml.etree.ElementTree as ET
 from html import escape
 from datetime import datetime
 from pathlib import Path
 from urllib.parse import quote
+from xml.dom import minidom
 
 
 SITE_URL = 'https://badsoftware.com'
@@ -25,6 +25,44 @@ AUTHOR_BIO_HTML = (
     '<a href="https://associationforsoftwaretesting.org" target="_blank" '
     'rel="noopener">Association for Software Testing</a>.'
 )
+STATIC_PAGES = [
+    {
+        'path': 'index.html',
+        'title': 'Home',
+        'description': (
+            'The Bad Software Company is a boutique systems-engineering advisory '
+            'firm focused on quality, AI, Developer Relations, and practical '
+            'product engineering.'
+        ),
+    },
+    {
+        'path': 'about.html',
+        'title': 'About',
+        'description': (
+            'Learn how The Bad Software Company helps organizations understand '
+            'why software, AI systems, and engineering organizations fail to meet '
+            'expectations.'
+        ),
+    },
+    {
+        'path': 'services.html',
+        'title': 'Services',
+        'description': (
+            'Consulting, training, speaking, TestOpsy quality investigations, '
+            'and full-stack design and build work.'
+        ),
+    },
+    {
+        'path': 'contact.html',
+        'title': 'Contact',
+        'description': 'Contact The Bad Software Company about advisory or build work.',
+    },
+]
+
+
+def absolute_url(path):
+    """Build a canonical absolute URL for a generated site path."""
+    return f"{SITE_URL}/{path.lstrip('/')}"
 
 
 def parse_post(content):
@@ -239,6 +277,86 @@ def generate_index(posts):
 '''
 
 
+def sitemap_entry(parent, path, lastmod=None):
+    """Add a URL entry to the sitemap."""
+    url = ET.SubElement(parent, 'url')
+    loc = ET.SubElement(url, 'loc')
+    loc.text = absolute_url(path)
+
+    if lastmod:
+        lastmod_element = ET.SubElement(url, 'lastmod')
+        lastmod_element.text = lastmod
+
+
+def generate_sitemap(posts):
+    """Generate XML sitemap content for the static site and blog posts."""
+    urlset = ET.Element(
+        'urlset',
+        xmlns='http://www.sitemaps.org/schemas/sitemap/0.9',
+    )
+
+    latest_post_date = max((post['date'] for post in posts), default=None)
+    for page in STATIC_PAGES:
+        sitemap_entry(urlset, page['path'])
+
+    sitemap_entry(urlset, 'blog/index.html', latest_post_date)
+
+    for post in sorted(posts, key=lambda p: p['date'], reverse=True):
+        sitemap_entry(urlset, f"blog/{post['slug']}.html", post['date'])
+
+    rough_xml = ET.tostring(urlset, encoding='utf-8')
+    pretty_xml = minidom.parseString(rough_xml).toprettyxml(indent='  ')
+    return '\n'.join(line for line in pretty_xml.splitlines() if line.strip()) + '\n'
+
+
+def generate_llms_txt(posts):
+    """Generate an llms.txt overview for AI agents and other text consumers."""
+    lines = [
+        '# The Bad Software Company',
+        '',
+        (
+            '> Boutique systems-engineering advisory firm helping organizations '
+            'understand and improve software quality, AI-assisted development, '
+            'Developer Relations, and practical product delivery.'
+        ),
+        '',
+        'This file points agents to the primary public pages and blog posts for '
+        'badsoftware.com. Prefer the canonical URLs below when citing or indexing '
+        'the site.',
+        '',
+        '## Core Pages',
+    ]
+
+    for page in STATIC_PAGES:
+        lines.append(
+            f"- [{page['title']}]({absolute_url(page['path'])}): "
+            f"{page['description']}"
+        )
+
+    lines.extend([
+        '- [Blog](https://badsoftware.com/blog/index.html): Articles from The Bad Software Company.',
+        '',
+        '## Blog Posts',
+    ])
+
+    for post in sorted(posts, key=lambda p: p['date'], reverse=True):
+        formatted_date = format_date(post['date']) if post['date'] else 'Undated'
+        excerpt = post['excerpt'].rstrip('.')
+        post_path = f"blog/{post['slug']}.html"
+        lines.append(
+            f"- [{post['title']}]({absolute_url(post_path)}): "
+            f"{excerpt}. Published {formatted_date}."
+        )
+
+    lines.extend([
+        '',
+        '## Machine-Readable Indexes',
+        '- [XML sitemap](https://badsoftware.com/sitemap.xml): Canonical URL list for crawlers.',
+    ])
+
+    return '\n'.join(lines) + '\n'
+
+
 def main():
     """Build all blog posts from text files."""
     posts_dir = Path('posts')
@@ -292,6 +410,16 @@ def main():
         with open(index_file, 'w', encoding='utf-8') as f:
             f.write(index_html)
         print(f"\nGenerated blog index with {len(posts)} post(s)")
+
+    sitemap_file = Path('docs/sitemap.xml')
+    with open(sitemap_file, 'w', encoding='utf-8') as f:
+        f.write(generate_sitemap(posts))
+    print(f"Generated {sitemap_file}")
+
+    llms_file = Path('docs/llms.txt')
+    with open(llms_file, 'w', encoding='utf-8') as f:
+        f.write(generate_llms_txt(posts))
+    print(f"Generated {llms_file}")
     
     print("\nBuild complete!")
 
