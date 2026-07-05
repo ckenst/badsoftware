@@ -12,6 +12,21 @@ from pathlib import Path
 from urllib.parse import quote
 
 
+SITE_URL = 'https://badsoftware.com'
+AUTHOR_NAME = 'Chris Kenst'
+AUTHOR_BIO_HTML = (
+    'Chris Kenst studies why software succeeds—and why it fails. He is the founder '
+    'of The Bad Software Company, author of '
+    '<a href="https://kenst.com" target="_blank" rel="noopener">Kenst.com</a>, '
+    'creator of '
+    '<a href="https://testingconferences.org" target="_blank" rel="noopener">'
+    'TestingConferences.org</a>, an open-source contributor, and former President '
+    'of the '
+    '<a href="https://associationforsoftwaretesting.org" target="_blank" '
+    'rel="noopener">Association for Software Testing</a>.'
+)
+
+
 def parse_post(content):
     """Parse a blog post text file into metadata and content."""
     parts = content.split('---', 1)
@@ -53,7 +68,35 @@ def tag_links(tags):
     return f'<p class="blog-tags">Tags: {", ".join(links)}</p>'
 
 
-def generate_html(metadata, content):
+def post_footer(title, slug):
+    """Generate social share links and author callout for a blog post."""
+    post_url = f'{SITE_URL}/blog/{slug}.html'
+    encoded_title = quote(title)
+    encoded_url = quote(post_url, safe='')
+    x_share_url = f'https://twitter.com/intent/tweet?text={encoded_title}&url={encoded_url}'
+    linkedin_share_url = f'https://www.linkedin.com/sharing/share-offsite/?url={encoded_url}'
+
+    return f'''      <footer class="blog-post-footer">
+        <section class="blog-share" aria-label="Share this article">
+          <h3>Share this article</h3>
+          <div class="blog-share-links">
+            <a class="blog-share-link" href="{x_share_url}" target="_blank" rel="noopener" aria-label="Share on X">X</a>
+            <a class="blog-share-link" href="{linkedin_share_url}" target="_blank" rel="noopener" aria-label="Share on LinkedIn">in</a>
+          </div>
+        </section>
+
+        <section class="author-card" aria-label="Written by">
+          <div class="author-avatar" aria-hidden="true">CK</div>
+          <div>
+            <p class="author-label">Written by</p>
+            <h3>{escape(AUTHOR_NAME)}</h3>
+            <p>{AUTHOR_BIO_HTML}</p>
+          </div>
+        </section>
+      </footer>'''
+
+
+def generate_html(metadata, content, slug):
     """Generate HTML for a blog post."""
     title = metadata.get('title', 'Untitled')
     date_str = metadata.get('date', '')
@@ -61,6 +104,7 @@ def generate_html(metadata, content):
     excerpt = metadata.get('excerpt', '')
     tags = parse_tags(metadata)
     tags_html = tag_links(tags)
+    footer_html = post_footer(title, slug)
     
     # Convert plain text paragraphs to HTML paragraphs
     paragraphs = [p.strip() for p in content.split('\n\n') if p.strip()]
@@ -98,6 +142,7 @@ def generate_html(metadata, content):
       <p class="blog-meta">Published {formatted_date}</p>
       {tags_html}
       {html_content}
+{footer_html}
     </article>
   </main>
 
@@ -219,11 +264,12 @@ def main():
         
         metadata, body = parse_post(content)
         
+        slug = metadata.get('slug', post_file.stem)
+        
         # Generate HTML
-        html = generate_html(metadata, body)
+        html = generate_html(metadata, body, slug)
         
         # Write HTML file
-        slug = metadata.get('slug', post_file.stem)
         output_file = blog_dir / f"{slug}.html"
         with open(output_file, 'w', encoding='utf-8') as f:
             f.write(html)
