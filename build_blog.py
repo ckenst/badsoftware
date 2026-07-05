@@ -42,7 +42,7 @@ def parse_tags(metadata):
 
 
 def tag_links(tags):
-    """Generate linked tag chips for blog pages."""
+    """Generate linked tags for blog posts."""
     if not tags:
         return ''
 
@@ -50,7 +50,7 @@ def tag_links(tags):
         f'<a class="blog-tag" href="/blog/index.html?tag={quote(tag)}">{escape(tag)}</a>'
         for tag in tags
     ]
-    return f'<p class="blog-tags">{"".join(links)}</p>'
+    return f'<p class="blog-tags">Tags: {", ".join(links)}</p>'
 
 
 def generate_html(metadata, content):
@@ -121,12 +121,10 @@ def generate_index(posts):
     for post in sorted_posts:
         formatted_date = format_date(post['date'])
         tags = post.get('tags', [])
-        tags_html = tag_links(tags)
         data_tags = '|'.join(tag.lower() for tag in tags)
         card = f'''      <article class="blog-card" data-tags="{escape(data_tags)}">
         <h3><a href="/blog/{post['slug']}.html">{post['title']}</a></h3>
         <p class="blog-meta">{formatted_date}</p>
-        {tags_html}
         <p>{post['excerpt']}</p>
       </article>'''
         cards.append(card)

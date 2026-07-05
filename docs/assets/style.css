@@ -119,10 +119,10 @@ nav a:focus-visible{background:rgba(127,127,127,0.14);outline:none}
 .blog-card h3{margin:0 0 0.4rem}
 .blog-card h3 a{color:var(--text);text-decoration:none}
 .blog-meta{color:var(--muted);font-size:0.95rem}
-.blog-tags{display:flex;flex-wrap:wrap;gap:0.4rem;margin:0.4rem 0 0.75rem}
-.blog-tag{display:inline-flex;align-items:center;min-height:2rem;border:1px solid rgba(127,127,127,0.35);border-radius:999px;color:var(--accent);font-size:0.88rem;font-weight:600;line-height:1;padding:0.35rem 0.65rem;text-decoration:none}
+.blog-tags{color:var(--muted);font-size:0.95rem;margin:0.4rem 0 0.75rem}
+.blog-tag{color:var(--accent);font-weight:600;text-decoration:none}
 .blog-tag:hover,
-.blog-tag:focus-visible{background:rgba(127,127,127,0.14);outline:none}
+.blog-tag:focus-visible{text-decoration:underline}
 .blog-post{max-width:740px}
 .site-footer{border-top:1px solid rgba(0,0,0,0.06);margin-top:2rem;padding:1rem 0;text-align:center;color:var(--muted)}
 
