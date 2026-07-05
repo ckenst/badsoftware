@@ -7,7 +7,7 @@ Converts text files to HTML blog posts and updates the blog index.
 import re
 import xml.etree.ElementTree as ET
 from html import escape
-from datetime import date, datetime
+from datetime import datetime
 from pathlib import Path
 from urllib.parse import quote
 from xml.dom import minidom
@@ -503,7 +503,7 @@ def sitemap_entry(parent, path, lastmod=None):
         lastmod_element.text = lastmod
 
 
-def generate_sitemap(posts, generated_lastmod=None):
+def generate_sitemap(posts):
     """Generate XML sitemap content for the static site and blog posts."""
     urlset = ET.Element(
         'urlset',
@@ -513,19 +513,19 @@ def generate_sitemap(posts, generated_lastmod=None):
     latest_post_date = max((post['date'] for post in posts), default=None)
     for page in STATIC_PAGES:
         sitemap_entry(urlset, page['path'])
-        sitemap_entry(urlset, markdown_path(page['path']), generated_lastmod)
+        sitemap_entry(urlset, markdown_path(page['path']))
 
     sitemap_entry(urlset, 'blog/index.html', latest_post_date)
-    sitemap_entry(urlset, markdown_path('blog/index.html'), generated_lastmod)
-    sitemap_entry(urlset, 'llms.txt', generated_lastmod)
-    sitemap_entry(urlset, 'llms-full.txt', generated_lastmod)
+    sitemap_entry(urlset, markdown_path('blog/index.html'), latest_post_date)
+    sitemap_entry(urlset, 'llms.txt')
+    sitemap_entry(urlset, 'llms-full.txt')
 
     for post in sorted(posts, key=lambda p: p['date'], reverse=True):
         sitemap_entry(urlset, f"blog/{post['slug']}.html", post['date'])
         sitemap_entry(
             urlset,
             markdown_path(f"blog/{post['slug']}.html"),
-            generated_lastmod or post['date'],
+            post['date'],
         )
 
     rough_xml = ET.tostring(urlset, encoding='utf-8')
@@ -647,7 +647,6 @@ def main():
     """Build all blog posts from text files."""
     posts_dir = Path('posts')
     blog_dir = Path('docs/blog')
-    generated_lastmod = date.today().isoformat()
     
     if not posts_dir.exists():
         print("Error: posts/ directory not found")
@@ -702,7 +701,7 @@ def main():
 
     sitemap_file = Path('docs/sitemap.xml')
     with open(sitemap_file, 'w', encoding='utf-8') as f:
-        f.write(generate_sitemap(posts, generated_lastmod))
+        f.write(generate_sitemap(posts))
     print(f"Generated {sitemap_file}")
 
     llms_file = Path('docs/llms.txt')
