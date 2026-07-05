@@ -4,15 +4,18 @@ Build blog posts from text files in posts/ directory.
 Converts text files to HTML blog posts and updates the blog index.
 """
 
+import re
 import xml.etree.ElementTree as ET
 from html import escape
-from datetime import datetime
+from datetime import date, datetime
 from pathlib import Path
 from urllib.parse import quote
 from xml.dom import minidom
 
 
 SITE_URL = 'https://badsoftware.com'
+SLUG_PATTERN = re.compile(r'^[a-z0-9]+(?:-[a-z0-9]+)*$')
+MARKDOWN_ESCAPE_CHARS = '\\`[]<>()'
 AUTHOR_NAME = 'Chris Kenst'
 AUTHOR_BIO_HTML = (
     'Chris Kenst studies why software succeeds—and why it fails. He is the founder '
@@ -142,6 +145,44 @@ def absolute_url(path):
 def markdown_path(path):
     """Return the generated Markdown mirror path for an HTML page path."""
     return f'{path}.md'
+
+
+def validate_slug(slug, post_file):
+    """Validate that a post slug is safe as both a filename and URL path segment."""
+    if not SLUG_PATTERN.fullmatch(slug):
+        raise ValueError(
+            f"{post_file}: invalid slug {slug!r}. Use lowercase letters, "
+            "numbers, and single hyphens only."
+        )
+
+
+def markdown_inline(text):
+    """Escape text for Markdown inline contexts and collapse metadata newlines."""
+    normalized = ' '.join(str(text).split())
+    return ''.join(
+        f'\\{char}' if char in MARKDOWN_ESCAPE_CHARS else char
+        for char in normalized
+    )
+
+
+def markdown_text(text):
+    """Escape text while preserving existing paragraph and line breaks."""
+    escaped_lines = []
+    for line in str(text).splitlines():
+        escaped = ''.join(
+            f'\\{char}' if char in MARKDOWN_ESCAPE_CHARS else char
+            for char in line
+        )
+        stripped = escaped.lstrip()
+        leading_spaces = len(escaped) - len(stripped)
+        if stripped.startswith(('#', '-', '+', '*', '>')):
+            escaped = f'{escaped[:leading_spaces]}\\{stripped}'
+        if re.match(r'^\d+\.', stripped):
+            stripped = stripped.replace('.', r'\.', 1)
+            escaped = f'{escaped[:leading_spaces]}{stripped}'
+        escaped_lines.append(escaped)
+
+    return '\n'.join(escaped_lines)
 
 
 def first_paragraph(text):
@@ -368,12 +409,12 @@ def generate_index(posts):
 def markdown_header(title, source_path, description=None):
     """Generate common metadata for Markdown mirrors."""
     lines = [
-        f'# {title}',
+        f'# {markdown_inline(title)}',
         f'Source: {absolute_url(source_path)}',
     ]
 
     if description:
-        lines.append(f'Summary: {description}')
+        lines.append(f'Summary: {markdown_inline(description)}')
 
     return lines
 
@@ -385,7 +426,7 @@ def generate_static_markdown(page):
         page['path'],
         page['description'],
     )
-    lines.extend(page.get('content', []))
+    lines.extend(markdown_text(content) for content in page.get('content', []))
     return '\n\n'.join(lines).strip() + '\n'
 
 
@@ -402,8 +443,8 @@ def generate_blog_index_markdown(posts):
         formatted_date = format_date(post['date']) if post['date'] else 'Undated'
         post_markdown_path = markdown_path(f"blog/{post['slug']}.html")
         lines.append(
-            f"- [{post['title']}]({absolute_url(post_markdown_path)}): "
-            f"{post['excerpt']} Published {formatted_date}."
+            f"- [{markdown_inline(post['title'])}]({absolute_url(post_markdown_path)}): "
+            f"{markdown_inline(post['excerpt'])} Published {formatted_date}."
         )
 
     return '\n\n'.join(lines).strip() + '\n'
@@ -423,9 +464,11 @@ def generate_post_markdown(post):
     ])
 
     if post.get('tags'):
-        lines.append(f"Tags: {', '.join(post['tags'])}")
+        lines.append(
+            f"Tags: {', '.join(markdown_inline(tag) for tag in post['tags'])}"
+        )
 
-    lines.append(post['body'])
+    lines.append(markdown_text(post['body']))
     return '\n\n'.join(lines).strip() + '\n'
 
 
@@ -460,7 +503,7 @@ def sitemap_entry(parent, path, lastmod=None):
         lastmod_element.text = lastmod
 
 
-def generate_sitemap(posts):
+def generate_sitemap(posts, generated_lastmod=None):
     """Generate XML sitemap content for the static site and blog posts."""
     urlset = ET.Element(
         'urlset',
@@ -470,16 +513,20 @@ def generate_sitemap(posts):
     latest_post_date = max((post['date'] for post in posts), default=None)
     for page in STATIC_PAGES:
         sitemap_entry(urlset, page['path'])
-        sitemap_entry(urlset, markdown_path(page['path']))
+        sitemap_entry(urlset, markdown_path(page['path']), generated_lastmod)
 
     sitemap_entry(urlset, 'blog/index.html', latest_post_date)
-    sitemap_entry(urlset, markdown_path('blog/index.html'), latest_post_date)
-    sitemap_entry(urlset, 'llms.txt', latest_post_date)
-    sitemap_entry(urlset, 'llms-full.txt', latest_post_date)
+    sitemap_entry(urlset, markdown_path('blog/index.html'), generated_lastmod)
+    sitemap_entry(urlset, 'llms.txt', generated_lastmod)
+    sitemap_entry(urlset, 'llms-full.txt', generated_lastmod)
 
     for post in sorted(posts, key=lambda p: p['date'], reverse=True):
         sitemap_entry(urlset, f"blog/{post['slug']}.html", post['date'])
-        sitemap_entry(urlset, markdown_path(f"blog/{post['slug']}.html"), post['date'])
+        sitemap_entry(
+            urlset,
+            markdown_path(f"blog/{post['slug']}.html"),
+            generated_lastmod or post['date'],
+        )
 
     rough_xml = ET.tostring(urlset, encoding='utf-8')
     pretty_xml = minidom.parseString(rough_xml).toprettyxml(indent='  ')
@@ -507,8 +554,8 @@ def generate_llms_txt(posts):
     for page in STATIC_PAGES:
         page_markdown_path = markdown_path(page['path'])
         lines.append(
-            f"- [{page['title']}]({absolute_url(page_markdown_path)}): "
-            f"{page['description']}"
+            f"- [{markdown_inline(page['title'])}]({absolute_url(page_markdown_path)}): "
+            f"{markdown_inline(page['description'])}"
         )
 
     lines.extend([
@@ -522,8 +569,8 @@ def generate_llms_txt(posts):
         excerpt = post['excerpt'].rstrip('.')
         post_path = markdown_path(f"blog/{post['slug']}.html")
         lines.append(
-            f"- [{post['title']}]({absolute_url(post_path)}): "
-            f"{excerpt}. Published {formatted_date}."
+            f"- [{markdown_inline(post['title'])}]({absolute_url(post_path)}): "
+            f"{markdown_inline(excerpt)}. Published {formatted_date}."
         )
 
     lines.extend([
@@ -558,13 +605,13 @@ def generate_llms_full_txt(posts):
     for page in STATIC_PAGES:
         lines.extend([
             '',
-            f"### {page['title']}",
+            f"### {markdown_inline(page['title'])}",
             f"Source: {absolute_url(page['path'])}",
             f"Markdown: {absolute_url(markdown_path(page['path']))}",
             '',
-            page['description'],
+            markdown_text(page['description']),
             '',
-            '\n\n'.join(page.get('content', [])),
+            '\n\n'.join(markdown_text(content) for content in page.get('content', [])),
         ])
 
     lines.extend(['', '## Blog Posts'])
@@ -574,18 +621,20 @@ def generate_llms_full_txt(posts):
         post_markdown_path = markdown_path(post_source_path)
         lines.extend([
             '',
-            f"### {post['title']}",
+            f"### {markdown_inline(post['title'])}",
             f"Source: {absolute_url(post_source_path)}",
             f"Markdown: {absolute_url(post_markdown_path)}",
             f"Published: {format_date(post['date']) if post['date'] else 'Undated'}",
         ])
 
         if post.get('tags'):
-            lines.append(f"Tags: {', '.join(post['tags'])}")
+            lines.append(
+                f"Tags: {', '.join(markdown_inline(tag) for tag in post['tags'])}"
+            )
 
-        body_lines = ['', post['body']]
+        body_lines = ['', markdown_text(post['body'])]
         if post['excerpt'].strip() != first_paragraph(post['body']):
-            body_lines = ['', post['excerpt'], *body_lines]
+            body_lines = ['', markdown_text(post['excerpt']), *body_lines]
 
         lines.extend([
             *body_lines,
@@ -598,6 +647,7 @@ def main():
     """Build all blog posts from text files."""
     posts_dir = Path('posts')
     blog_dir = Path('docs/blog')
+    generated_lastmod = date.today().isoformat()
     
     if not posts_dir.exists():
         print("Error: posts/ directory not found")
@@ -620,6 +670,7 @@ def main():
         metadata, body = parse_post(content)
         
         slug = metadata.get('slug', post_file.stem)
+        validate_slug(slug, post_file)
         
         # Generate HTML
         html = generate_html(metadata, body, slug)
@@ -651,7 +702,7 @@ def main():
 
     sitemap_file = Path('docs/sitemap.xml')
     with open(sitemap_file, 'w', encoding='utf-8') as f:
-        f.write(generate_sitemap(posts))
+        f.write(generate_sitemap(posts, generated_lastmod))
     print(f"Generated {sitemap_file}")
 
     llms_file = Path('docs/llms.txt')
