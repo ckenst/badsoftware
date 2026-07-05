@@ -24,17 +24,19 @@
 
   <main class="container">
     <h2>Blog</h2>
-    <p>The latest from The Bad Software Company:</p>
+    <p id="blog-intro">The latest from The Bad Software Company:</p>
 
     <section class="blog-list" aria-label="Blog posts">
-      <article class="blog-card">
+      <article class="blog-card" data-tags="devrel|build">
         <h3><a href="/blog/conversation-driven-development.html">Conversation Driven Development</a></h3>
         <p class="blog-meta">June 18, 2026</p>
+        <p class="blog-tags"><a class="blog-tag" href="/blog/index.html?tag=DevRel">DevRel</a><a class="blog-tag" href="/blog/index.html?tag=Build">Build</a></p>
         <p>This blog will remain human driven.</p>
       </article>
-      <article class="blog-card">
+      <article class="blog-card" data-tags="press release">
         <h3><a href="/blog/hello-world.html">Hello, world</a></h3>
         <p class="blog-meta">June 14, 2026</p>
+        <p class="blog-tags"><a class="blog-tag" href="/blog/index.html?tag=Press%20Release">Press Release</a></p>
         <p>Welcome to the Bad Software Company blog.</p>
       </article>
     </section>
@@ -45,5 +47,25 @@
       <p>&copy; 2026 The Bad Software Company</p>
     </div>
   </footer>
+  <script>
+    const selectedTag = new URLSearchParams(window.location.search).get('tag');
+    if (selectedTag) {
+      const normalizedTag = selectedTag.toLowerCase();
+      const cards = document.querySelectorAll('.blog-card');
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        const tags = (card.dataset.tags || '').split('|');
+        const isVisible = tags.includes(normalizedTag);
+        card.hidden = !isVisible;
+        if (isVisible) visibleCount += 1;
+      });
+
+      const intro = document.getElementById('blog-intro');
+      intro.textContent = visibleCount === 1
+        ? `1 article tagged "${selectedTag}":`
+        : `${visibleCount} articles tagged "${selectedTag}":`;
+    }
+  </script>
 </body>
 </html>

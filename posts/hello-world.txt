@@ -2,6 +2,7 @@ title: Hello, world
 date: 2026-06-14
 slug: hello-world
 excerpt: Welcome to the Bad Software Company blog.
+tags: Press Release
 ---
 Welcome to the Bad Software Company blog.
 

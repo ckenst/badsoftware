@@ -2,6 +2,7 @@ title: Your Post Title Here
 date: YYYY-MM-DD
 slug: url-friendly-slug
 excerpt: A brief one-sentence description of your post.
+tags: Tag One, Tag Two
 ---
 Write your first paragraph here.
 

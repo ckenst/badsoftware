@@ -6,8 +6,10 @@ Converts text files to HTML blog posts and updates the blog index.
 
 import os
 import re
+from html import escape
 from datetime import datetime
 from pathlib import Path
+from urllib.parse import quote
 
 
 def parse_post(content):
@@ -33,12 +35,32 @@ def format_date(date_str):
     return date_obj.strftime('%B %d, %Y')
 
 
+def parse_tags(metadata):
+    """Parse comma-separated tags from post metadata."""
+    tags = metadata.get('tags', '')
+    return [tag.strip() for tag in tags.split(',') if tag.strip()]
+
+
+def tag_links(tags):
+    """Generate linked tag chips for blog pages."""
+    if not tags:
+        return ''
+
+    links = [
+        f'<a class="blog-tag" href="/blog/index.html?tag={quote(tag)}">{escape(tag)}</a>'
+        for tag in tags
+    ]
+    return f'<p class="blog-tags">{"".join(links)}</p>'
+
+
 def generate_html(metadata, content):
     """Generate HTML for a blog post."""
     title = metadata.get('title', 'Untitled')
     date_str = metadata.get('date', '')
     formatted_date = format_date(date_str) if date_str else ''
     excerpt = metadata.get('excerpt', '')
+    tags = parse_tags(metadata)
+    tags_html = tag_links(tags)
     
     # Convert plain text paragraphs to HTML paragraphs
     paragraphs = [p.strip() for p in content.split('\n\n') if p.strip()]
@@ -74,6 +96,7 @@ def generate_html(metadata, content):
       <p><a href="/blog/index.html">&larr; Back to blog</a></p>
       <h2>{title}</h2>
       <p class="blog-meta">Published {formatted_date}</p>
+      {tags_html}
       {html_content}
     </article>
   </main>
@@ -97,9 +120,13 @@ def generate_index(posts):
     cards = []
     for post in sorted_posts:
         formatted_date = format_date(post['date'])
-        card = f'''      <article class="blog-card">
+        tags = post.get('tags', [])
+        tags_html = tag_links(tags)
+        data_tags = '|'.join(tag.lower() for tag in tags)
+        card = f'''      <article class="blog-card" data-tags="{escape(data_tags)}">
         <h3><a href="/blog/{post['slug']}.html">{post['title']}</a></h3>
         <p class="blog-meta">{formatted_date}</p>
+        {tags_html}
         <p>{post['excerpt']}</p>
       </article>'''
         cards.append(card)
@@ -132,7 +159,7 @@ def generate_index(posts):
 
   <main class="container">
     <h2>Blog</h2>
-    <p>The latest from The Bad Software Company:</p>
+    <p id="blog-intro">The latest from The Bad Software Company:</p>
 
     <section class="blog-list" aria-label="Blog posts">
 {cards_html}
@@ -144,6 +171,26 @@ def generate_index(posts):
       <p>&copy; 2026 The Bad Software Company</p>
     </div>
   </footer>
+  <script>
+    const selectedTag = new URLSearchParams(window.location.search).get('tag');
+    if (selectedTag) {{
+      const normalizedTag = selectedTag.toLowerCase();
+      const cards = document.querySelectorAll('.blog-card');
+      let visibleCount = 0;
+
+      cards.forEach((card) => {{
+        const tags = (card.dataset.tags || '').split('|');
+        const isVisible = tags.includes(normalizedTag);
+        card.hidden = !isVisible;
+        if (isVisible) visibleCount += 1;
+      }});
+
+      const intro = document.getElementById('blog-intro');
+      intro.textContent = visibleCount === 1
+        ? `1 article tagged "${{selectedTag}}":`
+        : `${{visibleCount}} articles tagged "${{selectedTag}}":`;
+    }}
+  </script>
 </body>
 </html>
 '''
@@ -190,7 +237,8 @@ def main():
             'title': metadata.get('title', 'Untitled'),
             'date': metadata.get('date', ''),
             'slug': slug,
-            'excerpt': metadata.get('excerpt', '')
+            'excerpt': metadata.get('excerpt', ''),
+            'tags': parse_tags(metadata)
         })
     
     # Generate index page

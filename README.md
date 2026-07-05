@@ -9,7 +9,7 @@ Blog posts are written as simple text files in the `posts/` directory and conver
 ### Writing a Blog Post
 
 1. Create a new `.txt` file in the `posts/` directory
-2. Add metadata at the top (title, date, slug, excerpt) followed by `---`
+2. Add metadata at the top (title, date, slug, excerpt, tags) followed by `---`
 3. Write your content as plain text paragraphs (separated by blank lines)
 4. Run `python3 build_blog.py` to generate the HTML
 
@@ -20,6 +20,7 @@ title: My Blog Post Title
 date: 2026-06-17
 slug: my-post-slug
 excerpt: A short description of the post.
+tags: Tag One, Tag Two
 ---
 This is the first paragraph of my blog post.
 
