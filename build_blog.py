@@ -144,6 +144,12 @@ def markdown_path(path):
     return f'{path}.md'
 
 
+def first_paragraph(text):
+    """Return the first non-empty paragraph from plain text."""
+    paragraphs = [p.strip() for p in text.split('\n\n') if p.strip()]
+    return paragraphs[0] if paragraphs else ''
+
+
 def parse_post(content):
     """Parse a blog post text file into metadata and content."""
     parts = content.split('---', 1)
@@ -219,21 +225,23 @@ def generate_html(metadata, content, slug):
     date_str = metadata.get('date', '')
     formatted_date = format_date(date_str) if date_str else ''
     excerpt = metadata.get('excerpt', '')
+    title_html = escape(title, quote=False)
+    excerpt_html = escape(excerpt, quote=True)
     tags = parse_tags(metadata)
     tags_html = tag_links(tags)
     footer_html = post_footer(title, slug)
     
     # Convert plain text paragraphs to HTML paragraphs
     paragraphs = [p.strip() for p in content.split('\n\n') if p.strip()]
-    html_content = '\n      '.join(f'<p>{p}</p>' for p in paragraphs)
+    html_content = '\n      '.join(f'<p>{escape(p, quote=False)}</p>' for p in paragraphs)
     
     return f'''<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="{excerpt}">
-  <title>{title} — The Bad Software Company Blog</title>
+  <meta name="description" content="{excerpt_html}">
+  <title>{title_html} — The Bad Software Company Blog</title>
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/style.css">
 <script src="/assets/theme.js" defer></script>
@@ -255,7 +263,7 @@ def generate_html(metadata, content, slug):
   <main class="container">
     <article class="blog-post">
       <p><a href="/blog/index.html">&larr; Back to blog</a></p>
-      <h2>{title}</h2>
+      <h2>{title_html}</h2>
       <p class="blog-meta">Published {formatted_date}</p>
       {tags_html}
       {html_content}
@@ -284,10 +292,11 @@ def generate_index(posts):
         formatted_date = format_date(post['date'])
         tags = post.get('tags', [])
         data_tags = '|'.join(tag.lower() for tag in tags)
+        post_url = f"/blog/{quote(post['slug'])}.html"
         card = f'''      <article class="blog-card" data-tags="{escape(data_tags)}">
-        <h3><a href="/blog/{post['slug']}.html">{post['title']}</a></h3>
+        <h3><a href="{post_url}">{escape(post['title'], quote=False)}</a></h3>
         <p class="blog-meta">{formatted_date}</p>
-        <p>{post['excerpt']}</p>
+        <p>{escape(post['excerpt'], quote=False)}</p>
       </article>'''
         cards.append(card)
     
@@ -461,11 +470,16 @@ def generate_sitemap(posts):
     latest_post_date = max((post['date'] for post in posts), default=None)
     for page in STATIC_PAGES:
         sitemap_entry(urlset, page['path'])
+        sitemap_entry(urlset, markdown_path(page['path']))
 
     sitemap_entry(urlset, 'blog/index.html', latest_post_date)
+    sitemap_entry(urlset, markdown_path('blog/index.html'), latest_post_date)
+    sitemap_entry(urlset, 'llms.txt', latest_post_date)
+    sitemap_entry(urlset, 'llms-full.txt', latest_post_date)
 
     for post in sorted(posts, key=lambda p: p['date'], reverse=True):
         sitemap_entry(urlset, f"blog/{post['slug']}.html", post['date'])
+        sitemap_entry(urlset, markdown_path(f"blog/{post['slug']}.html"), post['date'])
 
     rough_xml = ET.tostring(urlset, encoding='utf-8')
     pretty_xml = minidom.parseString(rough_xml).toprettyxml(indent='  ')
@@ -569,11 +583,12 @@ def generate_llms_full_txt(posts):
         if post.get('tags'):
             lines.append(f"Tags: {', '.join(post['tags'])}")
 
+        body_lines = ['', post['body']]
+        if post['excerpt'].strip() != first_paragraph(post['body']):
+            body_lines = ['', post['excerpt'], *body_lines]
+
         lines.extend([
-            '',
-            post['excerpt'],
-            '',
-            post['body'],
+            *body_lines,
         ])
 
     return '\n'.join(lines).strip() + '\n'
