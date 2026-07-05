@@ -34,6 +34,27 @@ STATIC_PAGES = [
             'firm focused on quality, AI, Developer Relations, and practical '
             'product engineering.'
         ),
+        'content': [
+            "Software so bad, it's good.",
+            (
+                'The Bad Software Company is a boutique systems-engineering '
+                'advisory firm.'
+            ),
+            (
+                'We combine creativity, bold decisions, and pragmatic engineering '
+                'to ship products that stand out.'
+            ),
+            (
+                'Consulting includes quality, AI, and Developer Relations work: '
+                'product strategy, architecture reviews, training, speaking, and '
+                'honest feedback.'
+            ),
+            (
+                'TestOpsy offers pragmatic testing strategies, test infrastructure, '
+                'observability, and chaos testing to keep systems reliable.'
+            ),
+            'Design and build work includes full-stack development and rapid iteration.',
+        ],
     },
     {
         'path': 'about.html',
@@ -43,6 +64,24 @@ STATIC_PAGES = [
             'why software, AI systems, and engineering organizations fail to meet '
             'expectations.'
         ),
+        'content': [
+            'The Bad Software Company is a boutique systems-engineering advisory firm.',
+            (
+                'The Bad Software Company helps organizations understand why '
+                'software, AI systems, and engineering organizations fail to meet '
+                'expectations.'
+            ),
+            (
+                'We investigate the hidden assumptions, failure modes, organizational '
+                'dynamics, and system behaviors that create unreliable products and '
+                'false confidence.'
+            ),
+            (
+                'Through analysis, research, and advisory services, we help teams '
+                'move beyond symptoms to address the underlying causes of bad software.'
+            ),
+            'Our goal is simple: help organizations build software they can trust.',
+        ],
     },
     {
         'path': 'services.html',
@@ -51,11 +90,46 @@ STATIC_PAGES = [
             'Consulting, training, speaking, TestOpsy quality investigations, '
             'and full-stack design and build work.'
         ),
+        'content': [
+            'The Bad Software Company is a boutique systems-engineering advisory firm.',
+            (
+                'Consulting, training, and speaking help teams make better decisions '
+                'about software quality, AI-assisted development, developer relations, '
+                'and engineering systems.'
+            ),
+            (
+                'Engagements include advisory work, product and architecture reviews, '
+                'hands-on workshops, team training, conference talks, and executive '
+                'briefings.'
+            ),
+            'A TestOpsy is a forensic examination of a software project\'s quality DNA.',
+            (
+                'A TestOpsy investigates the systems, processes, architecture, tooling, '
+                'and feedback loops that shape software quality.'
+            ),
+            (
+                'The three pillars of a TestOpsy are failure mode analysis, cause of '
+                'failure investigation, and quality observability.'
+            ),
+            (
+                'Deliverables include current-state quality assessment, risk and '
+                'failure mode analysis, findings report with prioritized recommendations, '
+                'executive summary, and follow-up review session.'
+            ),
+            (
+                'Design and build work helps teams move from idea to working software '
+                'with practical product design, full-stack implementation, and fast '
+                'feedback loops.'
+            ),
+        ],
     },
     {
         'path': 'contact.html',
         'title': 'Contact',
         'description': 'Contact The Bad Software Company about advisory or build work.',
+        'content': [
+            'Contact The Bad Software Company at hello@badsoftware.com.',
+        ],
     },
 ]
 
@@ -63,6 +137,11 @@ STATIC_PAGES = [
 def absolute_url(path):
     """Build a canonical absolute URL for a generated site path."""
     return f"{SITE_URL}/{path.lstrip('/')}"
+
+
+def markdown_path(path):
+    """Return the generated Markdown mirror path for an HTML page path."""
+    return f'{path}.md'
 
 
 def parse_post(content):
@@ -277,6 +356,90 @@ def generate_index(posts):
 '''
 
 
+def markdown_header(title, source_path, description=None):
+    """Generate common metadata for Markdown mirrors."""
+    lines = [
+        f'# {title}',
+        f'Source: {absolute_url(source_path)}',
+    ]
+
+    if description:
+        lines.append(f'Summary: {description}')
+
+    return lines
+
+
+def generate_static_markdown(page):
+    """Generate a Markdown mirror for a static page."""
+    lines = markdown_header(
+        f"The Bad Software Company - {page['title']}",
+        page['path'],
+        page['description'],
+    )
+    lines.extend(page.get('content', []))
+    return '\n\n'.join(lines).strip() + '\n'
+
+
+def generate_blog_index_markdown(posts):
+    """Generate a Markdown mirror for the blog index."""
+    lines = markdown_header(
+        'The Bad Software Company - Blog',
+        'blog/index.html',
+        'Articles from The Bad Software Company.',
+    )
+    lines.append('## Posts')
+
+    for post in sorted(posts, key=lambda p: p['date'], reverse=True):
+        formatted_date = format_date(post['date']) if post['date'] else 'Undated'
+        post_markdown_path = markdown_path(f"blog/{post['slug']}.html")
+        lines.append(
+            f"- [{post['title']}]({absolute_url(post_markdown_path)}): "
+            f"{post['excerpt']} Published {formatted_date}."
+        )
+
+    return '\n\n'.join(lines).strip() + '\n'
+
+
+def generate_post_markdown(post):
+    """Generate a Markdown mirror for a blog post."""
+    title = post['title']
+    source_path = f"blog/{post['slug']}.html"
+    lines = markdown_header(
+        f"The Bad Software Company Blog - {title}",
+        source_path,
+        post['excerpt'],
+    )
+    lines.extend([
+        f"Published: {format_date(post['date']) if post['date'] else 'Undated'}",
+    ])
+
+    if post.get('tags'):
+        lines.append(f"Tags: {', '.join(post['tags'])}")
+
+    lines.append(post['body'])
+    return '\n\n'.join(lines).strip() + '\n'
+
+
+def generate_markdown_mirrors(posts):
+    """Generate Markdown mirrors next to the published HTML pages."""
+    for page in STATIC_PAGES:
+        output_file = Path('docs') / markdown_path(page['path'])
+        with open(output_file, 'w', encoding='utf-8') as f:
+            f.write(generate_static_markdown(page))
+        print(f"Generated {output_file}")
+
+    blog_index_file = Path('docs') / markdown_path('blog/index.html')
+    with open(blog_index_file, 'w', encoding='utf-8') as f:
+        f.write(generate_blog_index_markdown(posts))
+    print(f"Generated {blog_index_file}")
+
+    for post in posts:
+        post_file = Path('docs') / markdown_path(f"blog/{post['slug']}.html")
+        with open(post_file, 'w', encoding='utf-8') as f:
+            f.write(generate_post_markdown(post))
+        print(f"Generated {post_file}")
+
+
 def sitemap_entry(parent, path, lastmod=None):
     """Add a URL entry to the sitemap."""
     url = ET.SubElement(parent, 'url')
@@ -320,21 +483,22 @@ def generate_llms_txt(posts):
             'Developer Relations, and practical product delivery.'
         ),
         '',
-        'This file points agents to the primary public pages and blog posts for '
-        'badsoftware.com. Prefer the canonical URLs below when citing or indexing '
-        'the site.',
+        'This file points agents to Markdown-friendly mirrors of the primary '
+        'public pages and blog posts for badsoftware.com. Each mirror includes '
+        'its canonical HTML source URL.',
         '',
         '## Core Pages',
     ]
 
     for page in STATIC_PAGES:
+        page_markdown_path = markdown_path(page['path'])
         lines.append(
-            f"- [{page['title']}]({absolute_url(page['path'])}): "
+            f"- [{page['title']}]({absolute_url(page_markdown_path)}): "
             f"{page['description']}"
         )
 
     lines.extend([
-        '- [Blog](https://badsoftware.com/blog/index.html): Articles from The Bad Software Company.',
+        f"- [Blog]({absolute_url(markdown_path('blog/index.html'))}): Articles from The Bad Software Company.",
         '',
         '## Blog Posts',
     ])
@@ -342,7 +506,7 @@ def generate_llms_txt(posts):
     for post in sorted(posts, key=lambda p: p['date'], reverse=True):
         formatted_date = format_date(post['date']) if post['date'] else 'Undated'
         excerpt = post['excerpt'].rstrip('.')
-        post_path = f"blog/{post['slug']}.html"
+        post_path = markdown_path(f"blog/{post['slug']}.html")
         lines.append(
             f"- [{post['title']}]({absolute_url(post_path)}): "
             f"{excerpt}. Published {formatted_date}."
@@ -352,9 +516,67 @@ def generate_llms_txt(posts):
         '',
         '## Machine-Readable Indexes',
         '- [XML sitemap](https://badsoftware.com/sitemap.xml): Canonical URL list for crawlers.',
+        '- [Full LLM context](https://badsoftware.com/llms-full.txt): Expanded text context for agents.',
     ])
 
     return '\n'.join(lines) + '\n'
+
+
+def generate_llms_full_txt(posts):
+    """Generate a fuller single-file context bundle for AI agents."""
+    lines = [
+        '# The Bad Software Company',
+        '',
+        (
+            'The Bad Software Company is a boutique systems-engineering advisory '
+            'firm helping organizations understand and improve software quality, '
+            'AI-assisted development, Developer Relations, and practical product '
+            'delivery.'
+        ),
+        '',
+        'Canonical site: https://badsoftware.com/',
+        'Sitemap: https://badsoftware.com/sitemap.xml',
+        'LLMS index: https://badsoftware.com/llms.txt',
+        '',
+        '## Core Pages',
+    ]
+
+    for page in STATIC_PAGES:
+        lines.extend([
+            '',
+            f"### {page['title']}",
+            f"Source: {absolute_url(page['path'])}",
+            f"Markdown: {absolute_url(markdown_path(page['path']))}",
+            '',
+            page['description'],
+            '',
+            '\n\n'.join(page.get('content', [])),
+        ])
+
+    lines.extend(['', '## Blog Posts'])
+
+    for post in sorted(posts, key=lambda p: p['date'], reverse=True):
+        post_source_path = f"blog/{post['slug']}.html"
+        post_markdown_path = markdown_path(post_source_path)
+        lines.extend([
+            '',
+            f"### {post['title']}",
+            f"Source: {absolute_url(post_source_path)}",
+            f"Markdown: {absolute_url(post_markdown_path)}",
+            f"Published: {format_date(post['date']) if post['date'] else 'Undated'}",
+        ])
+
+        if post.get('tags'):
+            lines.append(f"Tags: {', '.join(post['tags'])}")
+
+        lines.extend([
+            '',
+            post['excerpt'],
+            '',
+            post['body'],
+        ])
+
+    return '\n'.join(lines).strip() + '\n'
 
 
 def main():
@@ -400,7 +622,8 @@ def main():
             'date': metadata.get('date', ''),
             'slug': slug,
             'excerpt': metadata.get('excerpt', ''),
-            'tags': parse_tags(metadata)
+            'tags': parse_tags(metadata),
+            'body': body,
         })
     
     # Generate index page
@@ -420,6 +643,13 @@ def main():
     with open(llms_file, 'w', encoding='utf-8') as f:
         f.write(generate_llms_txt(posts))
     print(f"Generated {llms_file}")
+
+    llms_full_file = Path('docs/llms-full.txt')
+    with open(llms_full_file, 'w', encoding='utf-8') as f:
+        f.write(generate_llms_full_txt(posts))
+    print(f"Generated {llms_full_file}")
+
+    generate_markdown_mirrors(posts)
     
     print("\nBuild complete!")
 

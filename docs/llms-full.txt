@@ -1,0 +1,101 @@
+# The Bad Software Company
+
+The Bad Software Company is a boutique systems-engineering advisory firm helping organizations understand and improve software quality, AI-assisted development, Developer Relations, and practical product delivery.
+
+Canonical site: https://badsoftware.com/
+Sitemap: https://badsoftware.com/sitemap.xml
+LLMS index: https://badsoftware.com/llms.txt
+
+## Core Pages
+
+### Home
+Source: https://badsoftware.com/index.html
+Markdown: https://badsoftware.com/index.html.md
+
+The Bad Software Company is a boutique systems-engineering advisory firm focused on quality, AI, Developer Relations, and practical product engineering.
+
+Software so bad, it's good.
+
+The Bad Software Company is a boutique systems-engineering advisory firm.
+
+We combine creativity, bold decisions, and pragmatic engineering to ship products that stand out.
+
+Consulting includes quality, AI, and Developer Relations work: product strategy, architecture reviews, training, speaking, and honest feedback.
+
+TestOpsy offers pragmatic testing strategies, test infrastructure, observability, and chaos testing to keep systems reliable.
+
+Design and build work includes full-stack development and rapid iteration.
+
+### About
+Source: https://badsoftware.com/about.html
+Markdown: https://badsoftware.com/about.html.md
+
+Learn how The Bad Software Company helps organizations understand why software, AI systems, and engineering organizations fail to meet expectations.
+
+The Bad Software Company is a boutique systems-engineering advisory firm.
+
+The Bad Software Company helps organizations understand why software, AI systems, and engineering organizations fail to meet expectations.
+
+We investigate the hidden assumptions, failure modes, organizational dynamics, and system behaviors that create unreliable products and false confidence.
+
+Through analysis, research, and advisory services, we help teams move beyond symptoms to address the underlying causes of bad software.
+
+Our goal is simple: help organizations build software they can trust.
+
+### Services
+Source: https://badsoftware.com/services.html
+Markdown: https://badsoftware.com/services.html.md
+
+Consulting, training, speaking, TestOpsy quality investigations, and full-stack design and build work.
+
+The Bad Software Company is a boutique systems-engineering advisory firm.
+
+Consulting, training, and speaking help teams make better decisions about software quality, AI-assisted development, developer relations, and engineering systems.
+
+Engagements include advisory work, product and architecture reviews, hands-on workshops, team training, conference talks, and executive briefings.
+
+A TestOpsy is a forensic examination of a software project's quality DNA.
+
+A TestOpsy investigates the systems, processes, architecture, tooling, and feedback loops that shape software quality.
+
+The three pillars of a TestOpsy are failure mode analysis, cause of failure investigation, and quality observability.
+
+Deliverables include current-state quality assessment, risk and failure mode analysis, findings report with prioritized recommendations, executive summary, and follow-up review session.
+
+Design and build work helps teams move from idea to working software with practical product design, full-stack implementation, and fast feedback loops.
+
+### Contact
+Source: https://badsoftware.com/contact.html
+Markdown: https://badsoftware.com/contact.html.md
+
+Contact The Bad Software Company about advisory or build work.
+
+Contact The Bad Software Company at hello@badsoftware.com.
+
+## Blog Posts
+
+### Conversation Driven Development
+Source: https://badsoftware.com/blog/conversation-driven-development.html
+Markdown: https://badsoftware.com/blog/conversation-driven-development.html.md
+Published: June 18, 2026
+Tags: DevRel, Build
+
+This blog will remain human driven.
+
+One of my goals with this website is to drive the entire design, development, and deployment process with AI agents. For better or worse, I'm building everything through conversations. Call it a hands-on learning experience that will help me grow with the times. 
+
+The only thing I'm not using agents to build is this blog. Instead, I write the posts myself (I tend to write quickly) and upload the raw file. After that, the agent deploys it and makes sure it looks good on the page.
+
+### Hello, world
+Source: https://badsoftware.com/blog/hello-world.html
+Markdown: https://badsoftware.com/blog/hello-world.html.md
+Published: June 14, 2026
+Tags: Press Release
+
+Welcome to the Bad Software Company blog.
+
+Welcome to the Bad Software Company blog.
+
+This is our first post.
+
+Aside from having a website for my consulting firm, this website is an experiment. I'm building it solely through LLMs and agents. I'm not making changes directly, instead I'm telling AI what I want and then checking to make sure that's what got delivered. I have no idea if this will work in the long term, but that's what makes it fun.

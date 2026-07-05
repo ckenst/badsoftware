@@ -1,0 +1,15 @@
+# The Bad Software Company Blog - Hello, world
+
+Source: https://badsoftware.com/blog/hello-world.html
+
+Summary: Welcome to the Bad Software Company blog.
+
+Published: June 14, 2026
+
+Tags: Press Release
+
+Welcome to the Bad Software Company blog.
+
+This is our first post.
+
+Aside from having a website for my consulting firm, this website is an experiment. I'm building it solely through LLMs and agents. I'm not making changes directly, instead I'm telling AI what I want and then checking to make sure that's what got delivered. I have no idea if this will work in the long term, but that's what makes it fun.

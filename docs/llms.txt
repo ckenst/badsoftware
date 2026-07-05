@@ -2,18 +2,19 @@
 
 > Boutique systems-engineering advisory firm helping organizations understand and improve software quality, AI-assisted development, Developer Relations, and practical product delivery.
 
-This file points agents to the primary public pages and blog posts for badsoftware.com. Prefer the canonical URLs below when citing or indexing the site.
+This file points agents to Markdown-friendly mirrors of the primary public pages and blog posts for badsoftware.com. Each mirror includes its canonical HTML source URL.
 
 ## Core Pages
-- [Home](https://badsoftware.com/index.html): The Bad Software Company is a boutique systems-engineering advisory firm focused on quality, AI, Developer Relations, and practical product engineering.
-- [About](https://badsoftware.com/about.html): Learn how The Bad Software Company helps organizations understand why software, AI systems, and engineering organizations fail to meet expectations.
-- [Services](https://badsoftware.com/services.html): Consulting, training, speaking, TestOpsy quality investigations, and full-stack design and build work.
-- [Contact](https://badsoftware.com/contact.html): Contact The Bad Software Company about advisory or build work.
-- [Blog](https://badsoftware.com/blog/index.html): Articles from The Bad Software Company.
+- [Home](https://badsoftware.com/index.html.md): The Bad Software Company is a boutique systems-engineering advisory firm focused on quality, AI, Developer Relations, and practical product engineering.
+- [About](https://badsoftware.com/about.html.md): Learn how The Bad Software Company helps organizations understand why software, AI systems, and engineering organizations fail to meet expectations.
+- [Services](https://badsoftware.com/services.html.md): Consulting, training, speaking, TestOpsy quality investigations, and full-stack design and build work.
+- [Contact](https://badsoftware.com/contact.html.md): Contact The Bad Software Company about advisory or build work.
+- [Blog](https://badsoftware.com/blog/index.html.md): Articles from The Bad Software Company.
 
 ## Blog Posts
-- [Conversation Driven Development](https://badsoftware.com/blog/conversation-driven-development.html): This blog will remain human driven. Published June 18, 2026.
-- [Hello, world](https://badsoftware.com/blog/hello-world.html): Welcome to the Bad Software Company blog. Published June 14, 2026.
+- [Conversation Driven Development](https://badsoftware.com/blog/conversation-driven-development.html.md): This blog will remain human driven. Published June 18, 2026.
+- [Hello, world](https://badsoftware.com/blog/hello-world.html.md): Welcome to the Bad Software Company blog. Published June 14, 2026.
 
 ## Machine-Readable Indexes
 - [XML sitemap](https://badsoftware.com/sitemap.xml): Canonical URL list for crawlers.
+- [Full LLM context](https://badsoftware.com/llms-full.txt): Expanded text context for agents.

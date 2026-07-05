@@ -43,6 +43,8 @@ This will:
 - Update the blog index page at `docs/blog/index.html`
 - Generate the crawler sitemap at `docs/sitemap.xml`
 - Generate the agent-friendly site index at `docs/llms.txt`
+- Generate the expanded agent context file at `docs/llms-full.txt`
+- Generate Markdown mirrors for published pages and posts as `.html.md` files
 
 ### Updating Posts
 
