@@ -132,7 +132,7 @@ nav a:focus-visible{background:rgba(127,127,127,0.14);outline:none}
 .blog-share-link:hover,
 .blog-share-link:focus-visible{border-color:var(--accent);color:var(--accent);outline:none}
 .author-card{background:var(--card);border:1px solid rgba(127,127,127,0.25);border-radius:8px;display:grid;gap:1rem;grid-template-columns:auto 1fr;padding:1rem}
-.author-avatar{background:rgba(127,127,127,0.14);border:1px solid rgba(127,127,127,0.25);border-radius:50%;height:4rem;object-fit:cover;width:4rem}
+.author-avatar{display:block;height:4rem;width:4rem}
 .author-label{color:var(--accent);font-size:0.78rem;font-weight:800;letter-spacing:0.12em;margin:0 0 0.2rem;text-transform:uppercase}
 .author-card h3{margin:0 0 0.35rem}
 .author-card p:last-child{color:var(--muted);margin:0}
