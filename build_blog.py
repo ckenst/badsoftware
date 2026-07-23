@@ -271,7 +271,7 @@ def post_footer(title, slug):
         </section>
 
         <section class="author-card" aria-label="Written by">
-          <div class="author-avatar" aria-hidden="true">CK</div>
+          <img class="author-avatar" src="/assets/chris-kenst.png" alt="Chris Kenst">
           <div>
             <p class="author-label">Written by</p>
             <h3>{escape(AUTHOR_NAME)}</h3>
