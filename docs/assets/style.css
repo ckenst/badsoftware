@@ -139,6 +139,16 @@ nav a:focus-visible{background:rgba(127,127,127,0.14);outline:none}
 .author-card a{color:var(--accent);font-weight:600;text-decoration:none}
 .author-card a:hover,
 .author-card a:focus-visible{text-decoration:underline}
+.trusted-by{margin-top:2.5rem;padding:2rem 0;text-align:center;border-top:1px solid rgba(127,127,127,0.15);border-bottom:1px solid rgba(127,127,127,0.15)}
+.trusted-by-label{margin:0 0 1.75rem;font-size:0.72rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted)}
+.trusted-by-logos{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:2rem 3rem}
+.trusted-logo{font-weight:700;color:rgba(127,127,127,0.55);line-height:1.15;white-space:nowrap;user-select:none}
+.trusted-logo--cox{font-size:1.5rem;letter-spacing:-0.02em;text-transform:uppercase}
+.trusted-logo--cox small{display:block;font-size:0.5rem;letter-spacing:0.18em;font-weight:600}
+.trusted-logo--asana{font-size:1.1rem;letter-spacing:0.01em}
+.trusted-logo--vw{border:3px solid currentColor;border-radius:50%;width:3rem;height:3rem;display:inline-flex;align-items:center;justify-content:center;font-size:1rem;letter-spacing:-0.05em}
+.trusted-logo--oracle{font-size:1.3rem;letter-spacing:0.05em}
+.trusted-logo--walmart{font-size:1.2rem;font-weight:800}
 .site-footer{border-top:1px solid rgba(0,0,0,0.06);margin-top:2rem;padding:1rem 0;text-align:center;color:var(--muted)}
 
 @media (max-width:599px){
