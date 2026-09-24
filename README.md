@@ -2,6 +2,22 @@
 
 The Bad Software Company website.
 
+## Site Content
+
+The static site is published from `docs/` and generated with `build_blog.py`.
+
+## Case Studies
+
+Case studies are written as Markdown files in the `case-studies/` directory. Each file must begin with an H1 title followed by a one-paragraph summary.
+
+Run `python3 build_blog.py` to generate:
+
+- The Case Studies index at `docs/case-studies/index.html`
+- One public HTML page and Markdown mirror per case study
+- Case study entries in the sitemap and LLM indexes
+
+The case study renderer supports headings, paragraphs, ordered and unordered lists, tables, bold text, and external links.
+
 ## Blog Posts
 
 Blog posts are written as simple text files in the `posts/` directory and converted to HTML using `build_blog.py`.
@@ -29,7 +45,7 @@ This is the second paragraph.
 And so on...
 ```
 
-### Building the Blog
+### Building the Site
 
 To convert text files to HTML blog posts:
 
@@ -39,8 +55,10 @@ python3 build_blog.py
 
 This will:
 - Process all `.txt` files in the `posts/` directory
+- Process all `.md` files in the `case-studies/` directory
 - Generate HTML files in `docs/blog/` 
 - Update the blog index page at `docs/blog/index.html`
+- Generate the Case Studies index and detail pages in `docs/case-studies/`
 - Generate the crawler sitemap at `docs/sitemap.xml`
 - Generate the agent-friendly site index at `docs/llms.txt`
 - Generate the expanded agent context file at `docs/llms-full.txt`

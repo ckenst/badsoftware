@@ -139,6 +139,22 @@ nav a:focus-visible{background:rgba(127,127,127,0.14);outline:none}
 .author-card a{color:var(--accent);font-weight:600;text-decoration:none}
 .author-card a:hover,
 .author-card a:focus-visible{text-decoration:underline}
+.case-study-list{display:grid;gap:1rem;margin-top:1.5rem}
+.case-study-card{background:var(--card);border-radius:8px;padding:1.25rem}
+.case-study-card h3{margin:0 0 0.5rem}
+.case-study-card h3 a{color:var(--text);text-decoration:none}
+.case-study-card p{color:var(--muted);margin:0 0 1rem}
+.case-study-detail{max-width:800px}
+.case-study-detail>h1{font-size:clamp(2rem,6vw,3rem);line-height:1.08;margin-bottom:0.5rem}
+.case-study-detail>h1+p{color:var(--muted);font-size:1.15rem;margin-top:0}
+.case-study-detail h2{border-top:1px solid rgba(127,127,127,0.25);margin-top:2.5rem;padding-top:1.5rem}
+.case-study-detail h3{margin-top:1.75rem}
+.case-study-detail li{margin-bottom:0.45rem}
+.case-study-table-wrap{margin:1rem 0;max-width:100%;overflow-x:auto}
+.case-study-table{border-collapse:collapse;min-width:620px;width:100%}
+.case-study-table th,
+.case-study-table td{border-bottom:1px solid rgba(127,127,127,0.25);padding:0.75rem;text-align:left;vertical-align:top}
+.case-study-table th{background:var(--card);font-weight:700}
 .site-footer{border-top:1px solid rgba(0,0,0,0.06);margin-top:2rem;padding:1rem 0;text-align:center;color:var(--muted)}
 
 @media (max-width:599px){

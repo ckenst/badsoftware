@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
-"""
-Build blog posts from text files in posts/ directory.
-Converts text files to HTML blog posts and updates the blog index.
-"""
+"""Build the static blog, case studies, and machine-readable site indexes."""
 
 import re
 import xml.etree.ElementTree as ET
@@ -158,6 +155,28 @@ STATIC_PAGES = [
 ]
 
 
+def navigation_html():
+    """Return the shared primary navigation."""
+    return '''      <nav>
+        <a href="/index.html">Home</a>
+        <a href="/about.html">About</a>
+        <a href="/services.html">Services</a>
+        <a href="/case-studies/index.html">Case Studies</a>
+        <a href="/blog/index.html">Blog</a>
+        <a href="/contact.html">Contact Us</a>
+      </nav>'''
+
+
+def site_header_html():
+    """Return the shared site header used by generated pages."""
+    return f'''  <header class="site-header">
+    <div class="container">
+      <h1 class="logo"><a href="/index.html" aria-label="The Bad Software Company home"><img class="logo-light" src="/assets/logos/light_background.png" alt="The Bad Software Company"><img class="logo-dark" src="/assets/logos/dark_background.png" alt="The Bad Software Company"></a></h1>
+{navigation_html()}
+    </div>
+  </header>'''
+
+
 def absolute_url(path):
     """Build a canonical absolute URL for a generated site path."""
     return f"{SITE_URL}/{path.lstrip('/')}"
@@ -227,6 +246,139 @@ def parse_post(content):
             metadata[key.strip()] = value.strip()
     
     return metadata, body.strip()
+
+
+def parse_case_study(content, source_file):
+    """Extract case-study metadata from its Markdown source."""
+    lines = content.splitlines()
+    if not lines or not lines[0].startswith('# '):
+        raise ValueError(f"{source_file}: case study must start with an H1 title")
+
+    title = lines[0][2:].strip()
+    summary = next((line.strip() for line in lines[1:] if line.strip()), '')
+    slug = source_file.stem
+    validate_slug(slug, source_file)
+
+    return {
+        'title': title,
+        'summary': summary,
+        'slug': slug,
+        'body': content.strip(),
+    }
+
+
+def render_markdown_inline(text):
+    """Render the small inline Markdown subset used by case studies."""
+    rendered = escape(text, quote=False)
+    rendered = re.sub(
+        r'\[([^\]]+)\]\((https?://[^)]+)\)',
+        lambda match: (
+            f'<a href="{escape(match.group(2), quote=True)}" '
+            f'target="_blank" rel="noopener">{match.group(1)}</a>'
+        ),
+        rendered,
+    )
+    return re.sub(r'\*\*([^*]+)\*\*', r'<strong>\1</strong>', rendered)
+
+
+def is_table_separator(line):
+    """Return whether a Markdown table row is the header separator."""
+    cells = [cell.strip() for cell in line.strip().strip('|').split('|')]
+    return bool(cells) and all(re.fullmatch(r':?-{3,}:?', cell) for cell in cells)
+
+
+def render_case_study_markdown(content):
+    """Render the block Markdown subset used by case-study source files."""
+    lines = content.splitlines()
+    rendered = []
+    index = 0
+
+    while index < len(lines):
+        line = lines[index].strip()
+        if not line:
+            index += 1
+            continue
+
+        heading = re.match(r'^(#{1,3})\s+(.+)$', line)
+        if heading:
+            level = len(heading.group(1))
+            rendered.append(
+                f'<h{level}>{render_markdown_inline(heading.group(2))}</h{level}>'
+            )
+            index += 1
+            continue
+
+        if (
+            line.startswith('|')
+            and index + 1 < len(lines)
+            and is_table_separator(lines[index + 1])
+        ):
+            headers = [
+                cell.strip() for cell in line.strip('|').split('|')
+            ]
+            index += 2
+            rows = []
+            while index < len(lines) and lines[index].strip().startswith('|'):
+                rows.append([
+                    cell.strip()
+                    for cell in lines[index].strip().strip('|').split('|')
+                ])
+                index += 1
+
+            header_html = ''.join(
+                f'<th scope="col">{render_markdown_inline(cell)}</th>'
+                for cell in headers
+            )
+            rows_html = ''.join(
+                '<tr>' + ''.join(
+                    f'<td>{render_markdown_inline(cell)}</td>' for cell in row
+                ) + '</tr>'
+                for row in rows
+            )
+            rendered.append(
+                '<div class="case-study-table-wrap"><table class="case-study-table">'
+                f'<thead><tr>{header_html}</tr></thead><tbody>{rows_html}</tbody>'
+                '</table></div>'
+            )
+            continue
+
+        unordered = line.startswith('- ')
+        ordered = bool(re.match(r'^\d+\.\s+', line))
+        if unordered or ordered:
+            tag = 'ul' if unordered else 'ol'
+            items = []
+            pattern = r'^-\s+' if unordered else r'^\d+\.\s+'
+            while index < len(lines):
+                candidate = lines[index].strip()
+                if not re.match(pattern, candidate):
+                    break
+                items.append(re.sub(pattern, '', candidate))
+                index += 1
+            items_html = ''.join(
+                f'<li>{render_markdown_inline(item)}</li>' for item in items
+            )
+            rendered.append(f'<{tag}>{items_html}</{tag}>')
+            continue
+
+        paragraph_lines = [line]
+        index += 1
+        while index < len(lines):
+            candidate = lines[index].strip()
+            if (
+                not candidate
+                or re.match(r'^#{1,3}\s+', candidate)
+                or candidate.startswith('|')
+                or candidate.startswith('- ')
+                or re.match(r'^\d+\.\s+', candidate)
+            ):
+                break
+            paragraph_lines.append(candidate)
+            index += 1
+        rendered.append(
+            f'<p>{render_markdown_inline(" ".join(paragraph_lines))}</p>'
+        )
+
+    return '\n        '.join(rendered)
 
 
 def format_date(date_str):
@@ -309,18 +461,7 @@ def generate_html(metadata, content, slug):
 <script src="/assets/theme.js" defer></script>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container">
-      <h1 class="logo"><a href="/index.html" aria-label="The Bad Software Company home"><img class="logo-light" src="/assets/logos/light_background.png" alt="The Bad Software Company"><img class="logo-dark" src="/assets/logos/dark_background.png" alt="The Bad Software Company"></a></h1>
-      <nav>
-        <a href="/index.html">Home</a>
-        <a href="/about.html">About</a>
-        <a href="/services.html">Services</a>
-        <a href="/blog/index.html">Blog</a>
-        <a href="/contact.html">Contact Us</a>
-      </nav>
-    </div>
-  </header>
+{site_header_html()}
 
   <main class="container">
     <article class="blog-post">
@@ -375,18 +516,7 @@ def generate_index(posts):
 <script src="/assets/theme.js" defer></script>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container">
-      <h1 class="logo"><a href="/index.html" aria-label="The Bad Software Company home"><img class="logo-light" src="/assets/logos/light_background.png" alt="The Bad Software Company"><img class="logo-dark" src="/assets/logos/dark_background.png" alt="The Bad Software Company"></a></h1>
-      <nav>
-        <a href="/index.html">Home</a>
-        <a href="/about.html">About</a>
-        <a href="/services.html">Services</a>
-        <a href="/blog/index.html">Blog</a>
-        <a href="/contact.html">Contact Us</a>
-      </nav>
-    </div>
-  </header>
+{site_header_html()}
 
   <main class="container">
     <h2>Blog</h2>
@@ -422,6 +552,85 @@ def generate_index(posts):
         : `${{visibleCount}} articles tagged "${{selectedTag}}":`;
     }}
   </script>
+</body>
+</html>
+'''
+
+
+def generate_case_study_html(case_study):
+    """Generate a public HTML page for one case study."""
+    title = escape(case_study['title'], quote=False)
+    summary = escape(case_study['summary'], quote=True)
+    rendered_body = render_case_study_markdown(case_study['body'])
+
+    return f'''<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="{summary}">
+  <title>{title} — The Bad Software Company Case Studies</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/style.css">
+<script src="/assets/theme.js" defer></script>
+</head>
+<body>
+{site_header_html()}
+
+  <main class="container">
+    <article class="case-study-detail">
+      <p><a href="/case-studies/index.html">&larr; Back to case studies</a></p>
+      {rendered_body}
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 The Bad Software Company</p>
+    </div>
+  </footer>
+</body>
+</html>
+'''
+
+
+def generate_case_studies_index(case_studies):
+    """Generate the public case-studies index."""
+    cards = []
+    for case_study in case_studies:
+        cards.append(f'''      <article class="case-study-card">
+        <h3><a href="/case-studies/{quote(case_study['slug'])}.html">{escape(case_study['title'], quote=False)}</a></h3>
+        <p>{escape(case_study['summary'], quote=False)}</p>
+        <a class="section-link" href="/case-studies/{quote(case_study['slug'])}.html">Read the case study</a>
+      </article>''')
+
+    return f'''<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Case studies from The Bad Software Company.">
+  <title>Case Studies — The Bad Software Company</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/style.css">
+<script src="/assets/theme.js" defer></script>
+</head>
+<body>
+{site_header_html()}
+
+  <main class="container">
+    <h2>Case Studies</h2>
+    <p>How investigation, engineering, and measurement improve real software systems.</p>
+    <section class="case-study-list" aria-label="Case studies">
+{chr(10).join(cards)}
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 The Bad Software Company</p>
+    </div>
+  </footer>
 </body>
 </html>
 '''
@@ -493,7 +702,37 @@ def generate_post_markdown(post):
     return '\n\n'.join(lines).strip() + '\n'
 
 
-def generate_markdown_mirrors(posts):
+def generate_case_studies_index_markdown(case_studies):
+    """Generate a Markdown mirror for the case-studies index."""
+    lines = markdown_header(
+        'The Bad Software Company - Case Studies',
+        'case-studies/index.html',
+        'Case studies from The Bad Software Company.',
+    )
+    lines.append('## Case Studies')
+    for case_study in case_studies:
+        case_path = markdown_path(
+            f"case-studies/{case_study['slug']}.html"
+        )
+        lines.append(
+            f"- [{markdown_inline(case_study['title'])}]({absolute_url(case_path)}): "
+            f"{markdown_inline(case_study['summary'])}"
+        )
+    return '\n\n'.join(lines).strip() + '\n'
+
+
+def generate_case_study_markdown(case_study):
+    """Generate a canonical Markdown mirror for one case study."""
+    lines = markdown_header(
+        f"The Bad Software Company Case Study - {case_study['title']}",
+        f"case-studies/{case_study['slug']}.html",
+        case_study['summary'],
+    )
+    lines.append(case_study['body'])
+    return '\n\n'.join(lines).strip() + '\n'
+
+
+def generate_markdown_mirrors(posts, case_studies):
     """Generate Markdown mirrors next to the published HTML pages."""
     for page in STATIC_PAGES:
         output_file = Path('docs') / markdown_path(page['path'])
@@ -512,6 +751,21 @@ def generate_markdown_mirrors(posts):
             f.write(generate_post_markdown(post))
         print(f"Generated {post_file}")
 
+    case_studies_dir = Path('docs/case-studies')
+    case_studies_dir.mkdir(parents=True, exist_ok=True)
+    case_index_file = Path('docs') / markdown_path('case-studies/index.html')
+    with open(case_index_file, 'w', encoding='utf-8') as f:
+        f.write(generate_case_studies_index_markdown(case_studies))
+    print(f"Generated {case_index_file}")
+
+    for case_study in case_studies:
+        case_file = Path('docs') / markdown_path(
+            f"case-studies/{case_study['slug']}.html"
+        )
+        with open(case_file, 'w', encoding='utf-8') as f:
+            f.write(generate_case_study_markdown(case_study))
+        print(f"Generated {case_file}")
+
 
 def sitemap_entry(parent, path, lastmod=None):
     """Add a URL entry to the sitemap."""
@@ -524,7 +778,7 @@ def sitemap_entry(parent, path, lastmod=None):
         lastmod_element.text = lastmod
 
 
-def generate_sitemap(posts):
+def generate_sitemap(posts, case_studies):
     """Generate XML sitemap content for the static site and blog posts."""
     urlset = ET.Element(
         'urlset',
@@ -538,6 +792,8 @@ def generate_sitemap(posts):
 
     sitemap_entry(urlset, 'blog/index.html', latest_post_date)
     sitemap_entry(urlset, markdown_path('blog/index.html'), latest_post_date)
+    sitemap_entry(urlset, 'case-studies/index.html')
+    sitemap_entry(urlset, markdown_path('case-studies/index.html'))
     sitemap_entry(urlset, 'llms.txt')
     sitemap_entry(urlset, 'llms-full.txt')
 
@@ -549,12 +805,17 @@ def generate_sitemap(posts):
             post['date'],
         )
 
+    for case_study in case_studies:
+        source_path = f"case-studies/{case_study['slug']}.html"
+        sitemap_entry(urlset, source_path)
+        sitemap_entry(urlset, markdown_path(source_path))
+
     rough_xml = ET.tostring(urlset, encoding='utf-8')
     pretty_xml = minidom.parseString(rough_xml).toprettyxml(indent='  ')
     return '\n'.join(line for line in pretty_xml.splitlines() if line.strip()) + '\n'
 
 
-def generate_llms_txt(posts):
+def generate_llms_txt(posts, case_studies):
     """Generate an llms.txt overview for AI agents and other text consumers."""
     lines = [
         '# The Bad Software Company',
@@ -582,6 +843,20 @@ def generate_llms_txt(posts):
     lines.extend([
         f"- [Blog]({absolute_url(markdown_path('blog/index.html'))}): Articles from The Bad Software Company.",
         '',
+        '## Case Studies',
+    ])
+
+    for case_study in case_studies:
+        case_path = markdown_path(
+            f"case-studies/{case_study['slug']}.html"
+        )
+        lines.append(
+            f"- [{markdown_inline(case_study['title'])}]({absolute_url(case_path)}): "
+            f"{markdown_inline(case_study['summary'])}"
+        )
+
+    lines.extend([
+        '',
         '## Blog Posts',
     ])
 
@@ -604,7 +879,7 @@ def generate_llms_txt(posts):
     return '\n'.join(lines) + '\n'
 
 
-def generate_llms_full_txt(posts):
+def generate_llms_full_txt(posts, case_studies):
     """Generate a fuller single-file context bundle for AI agents."""
     lines = [
         '# The Bad Software Company',
@@ -633,6 +908,19 @@ def generate_llms_full_txt(posts):
             markdown_text(page['description']),
             '',
             '\n\n'.join(markdown_text(content) for content in page.get('content', [])),
+        ])
+
+    lines.extend(['', '## Case Studies'])
+
+    for case_study in case_studies:
+        source_path = f"case-studies/{case_study['slug']}.html"
+        lines.extend([
+            '',
+            f"### {markdown_inline(case_study['title'])}",
+            f"Source: {absolute_url(source_path)}",
+            f"Markdown: {absolute_url(markdown_path(source_path))}",
+            '',
+            case_study['body'],
         ])
 
     lines.extend(['', '## Blog Posts'])
@@ -665,15 +953,18 @@ def generate_llms_full_txt(posts):
 
 
 def main():
-    """Build all blog posts from text files."""
+    """Build public blog and case-study pages."""
     posts_dir = Path('posts')
     blog_dir = Path('docs/blog')
+    case_studies_source_dir = Path('case-studies')
+    case_studies_output_dir = Path('docs/case-studies')
     
     if not posts_dir.exists():
         print("Error: posts/ directory not found")
         return
     
     blog_dir.mkdir(parents=True, exist_ok=True)
+    case_studies_output_dir.mkdir(parents=True, exist_ok=True)
     
     # Process all text files in posts/
     posts = []
@@ -720,22 +1011,45 @@ def main():
             f.write(index_html)
         print(f"\nGenerated blog index with {len(posts)} post(s)")
 
+    case_studies = []
+    for case_study_file in sorted(case_studies_source_dir.glob('*.md')):
+        print(f"Processing {case_study_file.name}...")
+        case_study = parse_case_study(
+            case_study_file.read_text(encoding='utf-8'),
+            case_study_file,
+        )
+        case_studies.append(case_study)
+
+        output_file = case_studies_output_dir / f"{case_study['slug']}.html"
+        output_file.write_text(
+            generate_case_study_html(case_study),
+            encoding='utf-8',
+        )
+        print(f"  → Generated {output_file}")
+
+    case_studies_index_file = case_studies_output_dir / 'index.html'
+    case_studies_index_file.write_text(
+        generate_case_studies_index(case_studies),
+        encoding='utf-8',
+    )
+    print(f"Generated case studies index with {len(case_studies)} case study/studies")
+
     sitemap_file = Path('docs/sitemap.xml')
     with open(sitemap_file, 'w', encoding='utf-8') as f:
-        f.write(generate_sitemap(posts))
+        f.write(generate_sitemap(posts, case_studies))
     print(f"Generated {sitemap_file}")
 
     llms_file = Path('docs/llms.txt')
     with open(llms_file, 'w', encoding='utf-8') as f:
-        f.write(generate_llms_txt(posts))
+        f.write(generate_llms_txt(posts, case_studies))
     print(f"Generated {llms_file}")
 
     llms_full_file = Path('docs/llms-full.txt')
     with open(llms_full_file, 'w', encoding='utf-8') as f:
-        f.write(generate_llms_full_txt(posts))
+        f.write(generate_llms_full_txt(posts, case_studies))
     print(f"Generated {llms_full_file}")
 
-    generate_markdown_mirrors(posts)
+    generate_markdown_mirrors(posts, case_studies)
     
     print("\nBuild complete!")
 

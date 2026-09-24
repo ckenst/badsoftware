@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Creating an API source of truth, modernizing four SDKs, and measuring adoption of the resulting releases.">
+  <title>Restoring Mailinator's Developer Experience — The Bad Software Company Case Studies</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/style.css">
+<script src="/assets/theme.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1 class="logo"><a href="/index.html" aria-label="The Bad Software Company home"><img class="logo-light" src="/assets/logos/light_background.png" alt="The Bad Software Company"><img class="logo-dark" src="/assets/logos/dark_background.png" alt="The Bad Software Company"></a></h1>
+      <nav>
+        <a href="/index.html">Home</a>
+        <a href="/about.html">About</a>
+        <a href="/services.html">Services</a>
+        <a href="/case-studies/index.html">Case Studies</a>
+        <a href="/blog/index.html">Blog</a>
+        <a href="/contact.html">Contact Us</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="case-study-detail">
+      <p><a href="/case-studies/index.html">&larr; Back to case studies</a></p>
+      <h1>Restoring Mailinator's Developer Experience</h1>
+        <p>Creating an API source of truth, modernizing four SDKs, and measuring adoption of the resulting releases.</p>
+        <h2>Project snapshot</h2>
+        <div class="case-study-table-wrap"><table class="case-study-table"><thead><tr><th scope="col">Project</th><th scope="col">Details</th></tr></thead><tbody><tr><td>Organization</td><td>Mailinator</td></tr><tr><td>Project type</td><td>API documentation and SDK modernization</td></tr><tr><td>Period</td><td>2025–2026</td></tr><tr><td>Scope</td><td>OpenAPI specification, developer documentation, examples, tests, and the Ruby, JavaScript, Python, and C# SDKs</td></tr><tr><td>Initial condition</td><td>No current source of truth for the API; broken endpoints; outdated SDKs; inconsistent or missing examples</td></tr><tr><td>Measured result</td><td>Ruby downloads increased 64.5%; JavaScript downloads increased 24.4%; recent downloads shifted toward the updated releases</td></tr></tbody></table></div>
+        <h2>Executive summary</h2>
+        <p>Mailinator's developer documentation was old, omitted product features, and could no longer describe the complete API. There was no current specification to use as a source of truth, so the work began by testing the running product and reconciling its behavior with the available documentation.</p>
+        <p>That investigation found endpoints that were completely broken, behavior that had changed, and operations that no longer belonged in the public interface. It also showed that every official SDK was out of date. The clients exposed different subsets of the product, implemented some requests incorrectly, and offered examples that varied widely by language or were missing altogether.</p>
+        <p>The work produced an OpenAPI specification for the Mailinator API, updated documentation, and modernization work across the Ruby, JavaScript, Python, and C# clients. After publication, Ruby and JavaScript showed the clearest evidence of adoption: their download rates increased, and most recent downloads moved to versions containing the new work.</p>
+        <h2>The challenge</h2>
+        <p>The original task appeared to be a documentation update. Three conditions made it a larger engineering problem:</p>
+        <ol><li><strong>The documentation was not authoritative.</strong> It was old and missing features, but there was no current API contract against which to correct it.</li><li><strong>The running product was inconsistent.</strong> Testing the existing API exposed endpoints that were broken, changed, replaced, or obsolete.</li><li><strong>The client libraries had drifted independently.</strong> Every official SDK was out of date. Features, request behavior, deprecation status, examples, and tests varied between languages.</li></ol>
+        <p>Rewriting the documentation alone would have made one part of the developer experience clearer while leaving the underlying disagreements intact.</p>
+        <h2>The approach</h2>
+        <h3>1. Establish the current behavior</h3>
+        <p>The running product became the starting point. Existing endpoints were exercised to determine what worked, what had changed, and what was broken. Available documentation and implementation behavior were compared rather than assuming either one was correct.</p>
+        <h3>2. Create the API specification</h3>
+        <p>An <a href="https://github.com/manybrain/mailinatordocs/blob/main/openapi/mailinator-api.yaml" target="_blank" rel="noopener">OpenAPI specification</a> was created to describe the available endpoints, parameters, request bodies, response models, and deprecated behavior in one place.</p>
+        <p>The specification gave the API documentation a defined contract. It also made discrepancies testable: an SDK operation either aligned with the contract or it did not.</p>
+        <h3>3. Update the documentation</h3>
+        <p>The developer documentation was reorganized and updated against the specification. Missing API operations were documented, incorrect material was corrected, and newer examples were added. The specification also supported generated endpoint documentation, reducing the amount of API reference material that had to be maintained independently.</p>
+        <h3>4. Compare the SDKs with the contract</h3>
+        <p>The assessment found that all of Mailinator's official SDKs were out of date. Remediation focused first on the Ruby, JavaScript, Python, and C# clients.</p>
+        <p>The comparison uncovered missing message retrieval and streaming operations, incorrect paths and parameters, incomplete response models, and unsupported or obsolete operations that were still presented as current.</p>
+        <h3>5. Repair the clients and their surrounding systems</h3>
+        <p>The SDK work included:</p>
+        <ul><li>Adding missing API operations and query parameters.</li><li>Correcting request paths, payloads, and response models.</li><li>Marking obsolete operations as deprecated.</li><li>Adding regression coverage for corrected behavior.</li><li>Separating offline tests from integration tests that required credentials.</li><li>Adding or standardizing installation instructions, examples, reference material, and changelogs.</li><li>Updating dependencies and addressing known security vulnerabilities.</li><li>Documenting how to compare each client with the OpenAPI specification as the API evolves.</li></ul>
+        <p>The objective was not to make the language repositories identical. It was to make them describe and access the same product while respecting the conventions of each ecosystem.</p>
+        <h2>Results</h2>
+        <h3>A shared source of truth</h3>
+        <p>Mailinator gained a machine-readable API contract that could inform its endpoint documentation and SDK maintenance. Changes no longer had to be reconstructed independently from old documentation and client implementations.</p>
+        <h3>New SDK releases</h3>
+        <p>The first published releases containing this work were:</p>
+        <div class="case-study-table-wrap"><table class="case-study-table"><thead><tr><th scope="col">SDK</th><th scope="col">First updated release</th><th scope="col">Publication date</th><th scope="col">Previous release gap</th></tr></thead><tbody><tr><td>JavaScript</td><td>1.0.8</td><td>February 11, 2026</td><td>9 months</td></tr><tr><td>Ruby</td><td>1.0.7</td><td>March 9, 2026</td><td>12 months</td></tr><tr><td>Python</td><td>1.0.8</td><td>April 12, 2026</td><td>13 months</td></tr><tr><td>C#</td><td>1.0.7</td><td>August 15, 2026</td><td>17 months</td></tr></tbody></table></div>
+        <p>Additional releases expanded API coverage, improved tests and examples, and updated dependencies.</p>
+        <h3>Evidence of adoption</h3>
+        <p>Public package-registry data was compared across equal 90-day periods immediately before and after the first updated Ruby and JavaScript releases.</p>
+        <div class="case-study-table-wrap"><table class="case-study-table"><thead><tr><th scope="col">SDK</th><th scope="col">Before</th><th scope="col">After</th><th scope="col">Change</th><th scope="col">Updated-version adoption</th></tr></thead><tbody><tr><td>Ruby</td><td>10.7 downloads/day</td><td>17.6 downloads/day</td><td><strong>+64.5%</strong></td><td>91% of recent downloads</td></tr><tr><td>JavaScript</td><td>4,406 downloads/day</td><td>5,483 downloads/day</td><td><strong>+24.4%</strong></td><td>71% of recent weekly downloads</td></tr></tbody></table></div>
+        <p>Ruby provided the clearest result. Its download rate increased almost 65%, and recent downloads shifted overwhelmingly toward versions containing the new work.</p>
+        <p>JavaScript downloads increased approximately 24%. The package had already been growing, but its year-over-year growth also accelerated after the updated releases.</p>
+        <p>The other clients did not provide the same evidence. Updated Python versions received downloads, but the package's overall download rate did not increase. The C# release showed an early increase but had not been available long enough for an equally strong comparison.</p>
+        <h2>Measurement limits</h2>
+        <p>Package downloads are not unique users or API requests. Registry counts include automated builds, dependency scanners, repeated installations, and other activity that cannot be separated into individual developers. Timing alone also cannot prove that the SDK releases caused the download increases.</p>
+        <p>The data supports a narrower conclusion: developers adopted the repaired Ruby and JavaScript releases, and most recent downloads moved to versions containing the new work. That is evidence of distribution and version adoption, not proof of downstream Mailinator usage.</p>
+        <h2>End state</h2>
+        <p>The project changed more than the documentation. Mailinator had a defined API contract, updated developer material, newer client releases, more consistent examples, and stronger tests around the behavior that had been repaired.</p>
+        <p>The documentation problem was where the maintenance gap became visible. Establishing a source of truth made it possible to find the connected problems and repair them systematically.</p>
+        <h2>Evidence sources</h2>
+        <ul><li><a href="https://github.com/manybrain/mailinatordocs/blob/main/openapi/mailinator-api.yaml" target="_blank" rel="noopener">Mailinator API specification</a></li><li><a href="https://github.com/manybrain/mailinator-ruby-client" target="_blank" rel="noopener">Ruby SDK</a> and <a href="https://rubygems.org/gems/mailinator_client" target="_blank" rel="noopener">RubyGems package</a></li><li><a href="https://github.com/manybrain/mailinator-javascript-client" target="_blank" rel="noopener">JavaScript SDK</a> and <a href="https://www.npmjs.com/package/mailinator-client" target="_blank" rel="noopener">npm package</a></li><li><a href="https://github.com/manybrain/mailinator-python-client" target="_blank" rel="noopener">Python SDK</a> and <a href="https://pypi.org/project/mailinator-python-client-2/" target="_blank" rel="noopener">PyPI package</a></li><li><a href="https://github.com/manybrain/mailinator-csharp-client" target="_blank" rel="noopener">C# SDK</a> and <a href="https://www.nuget.org/packages/MailinatorApiClient" target="_blank" rel="noopener">NuGet package</a></li></ul>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 The Bad Software Company</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,3 +1,9 @@
+# The Bad Software Company Case Study - Restoring Mailinator's Developer Experience
+
+Source: https://badsoftware.com/case-studies/mailinator-developer-experience.html
+
+Summary: Creating an API source of truth, modernizing four SDKs, and measuring adoption of the resulting releases.
+
 # Restoring Mailinator's Developer Experience
 
 Creating an API source of truth, modernizing four SDKs, and measuring adoption of the resulting releases.
