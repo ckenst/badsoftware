@@ -2,25 +2,21 @@
 
 Source: https://badsoftware.com/index.html
 
-Summary: The Bad Software Company is a boutique systems-engineering advisory firm focused on quality, AI, Developer Relations, and practical product engineering.
+Summary: Start with a TestOpsy to find the conditions making software unreliable, then move from findings to decisions and implementation.
 
 Software so bad, it's good.
 
-We help teams understand why software, AI systems, and engineering organizations fail—and what to do next.
+Start with a TestOpsy.
 
-Why Bad Software?
+When releases slow down, defects escape, or confidence drops, a TestOpsy examines the technical and organizational system behind the symptoms.
 
-Most teams know when quality is slipping. Releases get slower. Bugs escape. Tests become noisy. AI-generated code adds speed, but also uncertainty. Confidence drops.
+From findings to working changes
 
-The hard part is knowing why.
+Each service stands on its own. TestOpsy identifies failure modes, their causes, and the signals a team needs to monitor. Advisory helps leaders decide what to change and in what order. Implementation turns defined work into working improvements. When a problem crosses those boundaries, the services can connect.
 
-The Bad Software Company helps teams investigate the technical, organizational, and human systems behind software failure—so they can make better decisions, improve reliability, and build software they can trust.
+Proof in practice: Mailinator
 
-Consulting includes quality, AI, and Developer Relations work: product strategy, architecture reviews, training, speaking, and honest feedback.
-
-TestOpsy offers pragmatic testing strategies, test infrastructure, observability, and chaos testing to keep systems reliable.
-
-Design and build work includes full-stack development and rapid iteration.
+An outdated-documentation project exposed a missing API source of truth, broken endpoints, and four outdated SDKs. The work continued through specification, documentation, SDK repair, testing, publication, and measurement.
 
 Founder-led by Chris Kenst
 

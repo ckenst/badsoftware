@@ -1,20 +1,23 @@
 # The Bad Software Company
 
-> Boutique systems-engineering advisory firm helping organizations understand and improve software quality, AI-assisted development, Developer Relations, and practical product delivery.
+> Start with a TestOpsy to find the conditions making software unreliable, then move from findings to decisions and implementation.
 
 This file points agents to Markdown-friendly mirrors of the primary public pages and blog posts for badsoftware.com. Each mirror includes its canonical HTML source URL.
 
 ## Core Pages
-- [Home](https://badsoftware.com/index.html.md): The Bad Software Company is a boutique systems-engineering advisory firm focused on quality, AI, Developer Relations, and practical product engineering.
+- [Home](https://badsoftware.com/index.html.md): Start with a TestOpsy to find the conditions making software unreliable, then move from findings to decisions and implementation.
 - [About](https://badsoftware.com/about.html.md): Learn how The Bad Software Company helps organizations understand why software, AI systems, and engineering organizations fail to meet expectations.
-- [Services](https://badsoftware.com/services.html.md): Consulting, training, speaking, TestOpsy quality investigations, and full-stack design and build work.
-- [Contact](https://badsoftware.com/contact.html.md): Contact The Bad Software Company about advisory or build work.
-- [Blog](https://badsoftware.com/blog/index.html.md): Articles from The Bad Software Company.
+- [TestOpsy](https://badsoftware.com/testopsy.html.md): A structured assessment of the systems, processes, architecture, tooling, and feedback loops that shape software quality.
+- [Advisory](https://badsoftware.com/advisory.html.md): Evidence-based guidance for deciding what to change, what to defer, and how to measure whether the response is working.
+- [Implementation](https://badsoftware.com/implementation.html.md): Hands-on engineering that turns assessed problems and prioritized recommendations into working software and maintainable systems.
+- [How We Help](https://badsoftware.com/services.html.md): An overview of the path from TestOpsy assessment through Advisory and hands-on Implementation.
+- [Discuss a TestOpsy](https://badsoftware.com/contact.html.md): Request a free 30-minute fit call to discuss what you are seeing and whether a TestOpsy is the right next step.
+- [Insights](https://badsoftware.com/blog/index.html.md): Articles, research, talks, and company news from The Bad Software Company.
 
 ## Case Studies
 - [Restoring Mailinator's Developer Experience](https://badsoftware.com/case-studies/mailinator-developer-experience.html.md): Creating an API source of truth, modernizing four SDKs, and measuring adoption of the resulting releases.
 
-## Blog Posts
+## Insight Articles
 - [Conversation Driven Development](https://badsoftware.com/blog/conversation-driven-development.html.md): This blog will remain human driven. Published June 18, 2026.
 - [Hello, world](https://badsoftware.com/blog/hello-world.html.md): Welcome to the Bad Software Company blog. Published June 14, 2026.
 

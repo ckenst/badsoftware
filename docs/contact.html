@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Contact — The Bad Software Company</title>
+  <meta name="description" content="Request a free 30-minute fit call to discuss what you are seeing and whether a TestOpsy is the right next step.">
+  <title>Discuss a TestOpsy — The Bad Software Company</title>
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/style.css">
 <script src="/assets/theme.js" defer></script>
@@ -13,19 +14,24 @@
     <div class="container">
       <h1 class="logo"><a href="/index.html" aria-label="The Bad Software Company home"><img class="logo-light" src="/assets/logos/light_background.png" alt="The Bad Software Company"><img class="logo-dark" src="/assets/logos/dark_background.png" alt="The Bad Software Company"></a></h1>
       <nav>
-        <a href="/index.html">Home</a>
-        <a href="/about.html">About</a>
-        <a href="/services.html">Services</a>
+        <a href="/testopsy.html">TestOpsy</a>
+        <a href="/advisory.html">Advisory</a>
+        <a href="/implementation.html">Implementation</a>
         <a href="/case-studies/index.html">Case Studies</a>
-        <a href="/blog/index.html">Blog</a>
-        <a href="/contact.html">Contact Us</a>
+        <a href="/blog/index.html">Insights</a>
+        <a href="/about.html">About</a>
+        <a class="nav-cta" href="/contact.html">Discuss a TestOpsy</a>
       </nav>
     </div>
   </header>
 
   <main class="container">
-    <h2>Contact</h2>
-    <form id="contact-form" action="mailto:hello@badsoftware.com?subject=Website%20contact" method="post" enctype="text/plain">
+    <section class="page-hero compact">
+      <p class="eyebrow">Start a conversation</p>
+      <h2>Discuss a TestOpsy</h2>
+      <p>Request a free 30-minute fit call. We'll discuss what you're seeing, whether a TestOpsy is appropriate, and the best next step.</p>
+    </section>
+    <form id="contact-form" action="mailto:hello@badsoftware.com?subject=TestOpsy%20fit%20call" method="post" enctype="text/plain">
       <p class="field">
         <label for="name">Name</label>
         <input type="text" id="name" name="name" autocomplete="name" required>
@@ -37,11 +43,11 @@
       </p>
 
       <p class="field">
-        <label for="message">Message</label>
+        <label for="message">What are you seeing?</label>
         <textarea id="message" name="message" rows="6" required></textarea>
       </p>
 
-      <p><button type="submit" class="cta">Send message</button></p>
+      <p><button type="submit" class="cta">Request a fit call</button></p>
     </form>
   </main>
 
@@ -53,12 +59,12 @@
       const name = form.elements.name.value.trim();
       const email = form.elements.email.value.trim();
       const message = form.elements.message.value.trim();
-      const subject = name ? `Website contact from ${name}` : 'Website contact';
+      const subject = name ? `TestOpsy fit call request from ${name}` : 'TestOpsy fit call request';
       const body = [
         `Name: ${name}`,
         `Email: ${email}`,
         '',
-        'Message:',
+        'What I am seeing:',
         message
       ].join('\n');
 

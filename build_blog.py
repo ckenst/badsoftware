@@ -30,39 +30,32 @@ STATIC_PAGES = [
         'path': 'index.html',
         'title': 'Home',
         'description': (
-            'The Bad Software Company is a boutique systems-engineering advisory '
-            'firm focused on quality, AI, Developer Relations, and practical '
-            'product engineering.'
+            'Start with a TestOpsy to find the conditions making software '
+            'unreliable, then move from findings to decisions and implementation.'
         ),
         'content': [
             "Software so bad, it's good.",
+            'Start with a TestOpsy.',
             (
-                'We help teams understand why software, AI systems, and '
-                'engineering organizations fail—and what to do next.'
+                'When releases slow down, defects escape, or confidence drops, '
+                'a TestOpsy examines the technical and organizational system '
+                'behind the symptoms.'
             ),
-            'Why Bad Software?',
+            'From findings to working changes',
             (
-                'Most teams know when quality is slipping. Releases get slower. '
-                'Bugs escape. Tests become noisy. AI-generated code adds speed, '
-                'but also uncertainty. Confidence drops.'
+                'Each service stands on its own. TestOpsy identifies failure '
+                'modes, their causes, and the signals a team needs to monitor. '
+                'Advisory helps leaders decide what to change and in what order. '
+                'Implementation turns defined work into working improvements. '
+                'When a problem crosses those boundaries, the services can connect.'
             ),
-            'The hard part is knowing why.',
+            'Proof in practice: Mailinator',
             (
-                'The Bad Software Company helps teams investigate the technical, '
-                'organizational, and human systems behind software failure—so '
-                'they can make better decisions, improve reliability, and build '
-                'software they can trust.'
+                'An outdated-documentation project exposed a missing API source '
+                'of truth, broken endpoints, and four outdated SDKs. The work '
+                'continued through specification, documentation, SDK repair, '
+                'testing, publication, and measurement.'
             ),
-            (
-                'Consulting includes quality, AI, and Developer Relations work: '
-                'product strategy, architecture reviews, training, speaking, and '
-                'honest feedback.'
-            ),
-            (
-                'TestOpsy offers pragmatic testing strategies, test infrastructure, '
-                'observability, and chaos testing to keep systems reliable.'
-            ),
-            'Design and build work includes full-stack development and rapid iteration.',
             'Founder-led by Chris Kenst',
             (
                 'The Bad Software Company is founded by Chris Kenst '
@@ -98,58 +91,119 @@ STATIC_PAGES = [
                 'false confidence.'
             ),
             (
-                'Through analysis, research, and advisory services, we help teams '
-                'move beyond symptoms to address the underlying causes of bad software.'
+                'A TestOpsy makes those conditions visible. Advisory and '
+                'implementation help teams act on what the assessment finds.'
             ),
             'Our goal is simple: help organizations build software they can trust.',
         ],
     },
     {
-        'path': 'services.html',
-        'title': 'Services',
+        'path': 'testopsy.html',
+        'title': 'TestOpsy',
         'description': (
-            'Consulting, training, speaking, TestOpsy quality investigations, '
-            'and full-stack design and build work.'
+            'A structured assessment of the systems, processes, architecture, '
+            'tooling, and feedback loops that shape software quality.'
         ),
         'content': [
-            'The Bad Software Company is a boutique systems-engineering advisory firm.',
-            (
-                'Consulting, training, and speaking help teams make better decisions '
-                'about software quality, AI-assisted development, developer relations, '
-                'and engineering systems.'
-            ),
-            (
-                'Engagements include advisory work, product and architecture reviews, '
-                'hands-on workshops, team training, conference talks, and executive '
-                'briefings.'
-            ),
+            'Find the conditions creating unreliable software.',
             'A TestOpsy is a forensic examination of a software project\'s quality DNA.',
             (
-                'A TestOpsy investigates the systems, processes, architecture, tooling, '
-                'and feedback loops that shape software quality.'
+                'It investigates the system behind production defects, slow '
+                'releases, unreliable tests, flaky pipelines, and declining '
+                'confidence in deployments.'
             ),
             (
-                'The three pillars of a TestOpsy are failure mode analysis, cause of '
-                'failure investigation, and quality observability.'
+                'The assessment examines failure modes, causes of failure, and '
+                'quality observability rather than stopping at individual bugs.'
             ),
             (
-                'Deliverables include current-state quality assessment, risk and '
-                'failure mode analysis, findings report with prioritized recommendations, '
-                'executive summary, and follow-up review session.'
+                'Deliverables include a current-state quality assessment, risk '
+                'and failure mode analysis, prioritized recommendations, an '
+                'executive summary, and a follow-up review.'
+            ),
+            'What happens after a TestOpsy?',
+            (
+                'The findings can stand on their own. When a team needs more help, '
+                'Advisory supports decisions and sequencing, while Implementation '
+                'turns the selected recommendations into working changes.'
+            ),
+        ],
+    },
+    {
+        'path': 'advisory.html',
+        'title': 'Advisory',
+        'description': (
+            'Evidence-based guidance for deciding what to change, what to defer, '
+            'and how to measure whether the response is working.'
+        ),
+        'content': [
+            'Turn findings into decisions.',
+            (
+                'Advisory is a standalone service. It helps teams interpret what '
+                'they are seeing, choose a response, sequence the work, and define '
+                'useful feedback.'
             ),
             (
-                'Design and build work helps teams move from idea to working software '
-                'with practical product design, full-stack implementation, and fast '
-                'feedback loops.'
+                'Work can include quality and testing strategy, product and '
+                'architecture reviews, AI-assisted development, Developer '
+                'Relations, workshops, training, conference talks, and executive '
+                'briefings.'
+            ),
+        ],
+    },
+    {
+        'path': 'implementation.html',
+        'title': 'Implementation',
+        'description': (
+            'Hands-on engineering that turns assessed problems and prioritized '
+            'recommendations into working software and maintainable systems.'
+        ),
+        'content': [
+            'Turn the plan into working changes.',
+            (
+                'Implementation is a standalone service. It can begin with a '
+                'defined project or carry selected recommendations into '
+                'documentation, API contracts, SDKs and integrations, automated '
+                'tests, test infrastructure, observability, prototypes, internal '
+                'tools, and customer-facing applications.'
+            ),
+            (
+                'The Mailinator work moved through this full loop: investigation '
+                'revealed connected documentation and product problems, an OpenAPI '
+                'specification established a source of truth, and four SDKs were '
+                'brought back into alignment.'
+            ),
+        ],
+    },
+    {
+        'path': 'services.html',
+        'title': 'How We Help',
+        'description': (
+            'An overview of the path from TestOpsy assessment through Advisory '
+            'and hands-on Implementation.'
+        ),
+        'content': [
+            'Three standalone services. One connected way to solve wider problems.',
+            (
+                'Hire any service directly. When the problem crosses boundaries, '
+                'a TestOpsy can identify the conditions behind unreliable software, '
+                'Advisory can help choose and sequence a response, and Implementation '
+                'can turn defined work into working changes.'
             ),
         ],
     },
     {
         'path': 'contact.html',
-        'title': 'Contact',
-        'description': 'Contact The Bad Software Company about advisory or build work.',
+        'title': 'Discuss a TestOpsy',
+        'description': (
+            'Request a free 30-minute fit call to discuss what you are seeing and '
+            'whether a TestOpsy is the right next step.'
+        ),
         'content': [
-            'Contact The Bad Software Company at hello@badsoftware.com.',
+            (
+                'Request a free 30-minute fit call. We will discuss what you are '
+                'seeing, whether a TestOpsy is appropriate, and the best next step.'
+            ),
         ],
     },
 ]
@@ -158,12 +212,13 @@ STATIC_PAGES = [
 def navigation_html():
     """Return the shared primary navigation."""
     return '''      <nav>
-        <a href="/index.html">Home</a>
-        <a href="/about.html">About</a>
-        <a href="/services.html">Services</a>
+        <a href="/testopsy.html">TestOpsy</a>
+        <a href="/advisory.html">Advisory</a>
+        <a href="/implementation.html">Implementation</a>
         <a href="/case-studies/index.html">Case Studies</a>
-        <a href="/blog/index.html">Blog</a>
-        <a href="/contact.html">Contact Us</a>
+        <a href="/blog/index.html">Insights</a>
+        <a href="/about.html">About</a>
+        <a class="nav-cta" href="/contact.html">Discuss a TestOpsy</a>
       </nav>'''
 
 
@@ -455,7 +510,7 @@ def generate_html(metadata, content, slug):
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="{excerpt_html}">
-  <title>{title_html} — The Bad Software Company Blog</title>
+  <title>{title_html} — The Bad Software Company Insights</title>
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/style.css">
 <script src="/assets/theme.js" defer></script>
@@ -465,7 +520,7 @@ def generate_html(metadata, content, slug):
 
   <main class="container">
     <article class="blog-post">
-      <p><a href="/blog/index.html">&larr; Back to blog</a></p>
+      <p><a href="/blog/index.html">&larr; Back to insights</a></p>
       <h2>{title_html}</h2>
       <p class="blog-meta">Published {formatted_date}</p>
       {tags_html}
@@ -485,7 +540,7 @@ def generate_html(metadata, content, slug):
 
 
 def generate_index(posts):
-    """Generate the blog index HTML."""
+    """Generate the insights index HTML."""
     # Sort posts by date (newest first)
     sorted_posts = sorted(posts, key=lambda p: p['date'], reverse=True)
     
@@ -510,7 +565,7 @@ def generate_index(posts):
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Blog — The Bad Software Company</title>
+  <title>Insights — The Bad Software Company</title>
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/style.css">
 <script src="/assets/theme.js" defer></script>
@@ -519,10 +574,10 @@ def generate_index(posts):
 {site_header_html()}
 
   <main class="container">
-    <h2>Blog</h2>
-    <p id="blog-intro">The latest from The Bad Software Company:</p>
+    <h2>Insights</h2>
+    <p id="blog-intro">Articles, research, talks, and company news from The Bad Software Company.</p>
 
-    <section class="blog-list" aria-label="Blog posts">
+    <section class="blog-list" aria-label="Insight articles">
 {cards_html}
     </section>
   </main>
@@ -620,7 +675,7 @@ def generate_case_studies_index(case_studies):
 
   <main class="container">
     <h2>Case Studies</h2>
-    <p>How investigation, engineering, and measurement improve real software systems.</p>
+    <p>How investigation becomes recommendations, working changes, and measurable results in real software systems.</p>
     <section class="case-study-list" aria-label="Case studies">
 {chr(10).join(cards)}
     </section>
@@ -661,11 +716,11 @@ def generate_static_markdown(page):
 
 
 def generate_blog_index_markdown(posts):
-    """Generate a Markdown mirror for the blog index."""
+    """Generate a Markdown mirror for the insights index."""
     lines = markdown_header(
-        'The Bad Software Company - Blog',
+        'The Bad Software Company - Insights',
         'blog/index.html',
-        'Articles from The Bad Software Company.',
+        'Articles, research, talks, and company news from The Bad Software Company.',
     )
     lines.append('## Posts')
 
@@ -685,7 +740,7 @@ def generate_post_markdown(post):
     title = post['title']
     source_path = f"blog/{post['slug']}.html"
     lines = markdown_header(
-        f"The Bad Software Company Blog - {title}",
+        f"The Bad Software Company Insights - {title}",
         source_path,
         post['excerpt'],
     )
@@ -821,9 +876,8 @@ def generate_llms_txt(posts, case_studies):
         '# The Bad Software Company',
         '',
         (
-            '> Boutique systems-engineering advisory firm helping organizations '
-            'understand and improve software quality, AI-assisted development, '
-            'Developer Relations, and practical product delivery.'
+            '> Start with a TestOpsy to find the conditions making software '
+            'unreliable, then move from findings to decisions and implementation.'
         ),
         '',
         'This file points agents to Markdown-friendly mirrors of the primary '
@@ -841,7 +895,7 @@ def generate_llms_txt(posts, case_studies):
         )
 
     lines.extend([
-        f"- [Blog]({absolute_url(markdown_path('blog/index.html'))}): Articles from The Bad Software Company.",
+        f"- [Insights]({absolute_url(markdown_path('blog/index.html'))}): Articles, research, talks, and company news from The Bad Software Company.",
         '',
         '## Case Studies',
     ])
@@ -857,7 +911,7 @@ def generate_llms_txt(posts, case_studies):
 
     lines.extend([
         '',
-        '## Blog Posts',
+        '## Insight Articles',
     ])
 
     for post in sorted(posts, key=lambda p: p['date'], reverse=True):
@@ -885,10 +939,9 @@ def generate_llms_full_txt(posts, case_studies):
         '# The Bad Software Company',
         '',
         (
-            'The Bad Software Company is a boutique systems-engineering advisory '
-            'firm helping organizations understand and improve software quality, '
-            'AI-assisted development, Developer Relations, and practical product '
-            'delivery.'
+            'The Bad Software Company starts with a TestOpsy to find the conditions '
+            'making software unreliable, then helps teams move from findings to '
+            'decisions and implementation.'
         ),
         '',
         'Canonical site: https://badsoftware.com/',
@@ -923,7 +976,7 @@ def generate_llms_full_txt(posts, case_studies):
             case_study['body'],
         ])
 
-    lines.extend(['', '## Blog Posts'])
+    lines.extend(['', '## Insight Articles'])
 
     for post in sorted(posts, key=lambda p: p['date'], reverse=True):
         post_source_path = f"blog/{post['slug']}.html"

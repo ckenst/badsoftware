@@ -18,11 +18,11 @@ Run `python3 build_blog.py` to generate:
 
 The case study renderer supports headings, paragraphs, ordered and unordered lists, tables, bold text, and external links.
 
-## Blog Posts
+## Insight Articles
 
-Blog posts are written as simple text files in the `posts/` directory and converted to HTML using `build_blog.py`.
+Insight articles are written as simple text files in the `posts/` directory and converted to HTML using `build_blog.py`.
 
-### Writing a Blog Post
+### Writing an Insight Article
 
 1. Create a new `.txt` file in the `posts/` directory
 2. Add metadata at the top (title, date, slug, excerpt, tags) followed by `---`
@@ -32,7 +32,7 @@ Blog posts are written as simple text files in the `posts/` directory and conver
 Example format:
 
 ```
-title: My Blog Post Title
+title: My Insight Article Title
 date: 2026-06-17
 slug: my-post-slug
 excerpt: A short description of the post.

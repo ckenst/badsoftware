@@ -1,7 +1,7 @@
-# The Bad Software Company - Contact
+# The Bad Software Company - Discuss a TestOpsy
 
 Source: https://badsoftware.com/contact.html
 
-Summary: Contact The Bad Software Company about advisory or build work.
+Summary: Request a free 30-minute fit call to discuss what you are seeing and whether a TestOpsy is the right next step.
 
-Contact The Bad Software Company at hello@badsoftware.com.
+Request a free 30-minute fit call. We will discuss what you are seeing, whether a TestOpsy is appropriate, and the best next step.

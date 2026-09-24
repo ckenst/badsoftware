@@ -1,4 +1,4 @@
-# The Bad Software Company Blog - Conversation Driven Development
+# The Bad Software Company Insights - Conversation Driven Development
 
 Source: https://badsoftware.com/blog/conversation-driven-development.html
 

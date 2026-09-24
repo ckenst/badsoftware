@@ -13,43 +13,58 @@
     <div class="container">
       <h1 class="logo"><a href="/index.html" aria-label="The Bad Software Company home"><img class="logo-light" src="/assets/logos/light_background.png" alt="The Bad Software Company"><img class="logo-dark" src="/assets/logos/dark_background.png" alt="The Bad Software Company"></a></h1>
       <nav>
-        <a href="/index.html">Home</a>
-        <a href="/about.html">About</a>
-        <a href="/services.html">Services</a>
+        <a href="/testopsy.html">TestOpsy</a>
+        <a href="/advisory.html">Advisory</a>
+        <a href="/implementation.html">Implementation</a>
         <a href="/case-studies/index.html">Case Studies</a>
-        <a href="/blog/index.html">Blog</a>
-        <a href="/contact.html">Contact Us</a>
+        <a href="/blog/index.html">Insights</a>
+        <a href="/about.html">About</a>
+        <a class="nav-cta" href="/contact.html">Discuss a TestOpsy</a>
       </nav>
     </div>
   </header>
 
   <main class="container">
     <section class="hero">
-      <h2>Software so bad, it's good.</h2>
-      <p>We help teams understand why software, AI systems, and engineering organizations fail—and what to do next.</p>
-      <p><a class="cta" href="/contact.html">Get in touch</a></p>
+      <p class="eyebrow">Software so bad, it's good.</p>
+      <h2>Start with a TestOpsy.</h2>
+      <p>When releases slow down, defects escape, or confidence drops, a TestOpsy examines the technical and organizational system behind the symptoms.</p>
+      <div class="cta-group">
+        <a class="cta" href="/contact.html">Discuss a TestOpsy</a>
+        <a class="text-link" href="/testopsy.html">See how it works</a>
+      </div>
     </section>
 
-    <section class="intro">
-      <h3>Why Bad Software?</h3>
-      <p>Most teams know when quality is slipping. Releases get slower. Bugs escape. Tests become noisy. AI-generated code adds speed, but also uncertainty. Confidence drops.</p>
-      <p>The hard part is knowing why.</p>
-      <p>The Bad Software Company helps teams investigate the technical, organizational, and human systems behind software failure—so they can make better decisions, improve reliability, and build software they can trust.</p>
+    <section class="intro" aria-labelledby="full-loop-heading">
+      <h3 id="full-loop-heading">From findings to working changes</h3>
+      <p>Each service stands on its own. When a problem crosses boundaries, TestOpsy, Advisory, and Implementation can connect the investigation to the decisions and working changes that follow.</p>
     </section>
 
-    <section class="highlights">
-      <article>
-        <h4>Consulting</h4>
-        <p>Quality, AI, and Developer Relations (DevRel) consulting: product strategy, architecture reviews, training, speaking, and honest feedback.</p>
+    <section class="engagement-flow" aria-label="How an engagement can progress">
+      <article class="flow-step">
+        <p class="step-number">01</p>
+        <h4><a href="/testopsy.html">TestOpsy</a></h4>
+        <p>Identify the failure modes, their causes, and the signals that will show whether quality is improving.</p>
       </article>
-      <article>
-        <h4>TestOpsy</h4>
-        <p>TestOpsy offers pragmatic testing strategies, test infrastructure, observability, and chaos testing to keep your systems reliable.</p>
+      <article class="flow-step">
+        <p class="step-number">02</p>
+        <h4><a href="/advisory.html">Advisory</a></h4>
+        <p>Decide what to change, what to defer, how to sequence the response, and what evidence should guide the work.</p>
       </article>
-      <article>
-        <h4>Design &amp; Build</h4>
-        <p>Full-stack development and design with rapid iterations.</p>
+      <article class="flow-step">
+        <p class="step-number">03</p>
+        <h4><a href="/implementation.html">Implementation</a></h4>
+        <p>Turn the selected recommendations into working changes across code, tests, documentation, tooling, and delivery systems.</p>
       </article>
+    </section>
+
+    <section class="proof-panel" aria-labelledby="mailinator-proof-heading">
+      <div>
+        <p class="eyebrow">Proof in practice</p>
+        <h3 id="mailinator-proof-heading">Mailinator: from an outdated document to an aligned developer experience</h3>
+        <p>An outdated-documentation project exposed a missing API source of truth, broken endpoints, and four outdated SDKs. The work continued through specification, documentation, SDK repair, testing, publication, and measurement.</p>
+      </div>
+      <a class="text-link" href="/case-studies/mailinator-developer-experience.html">Read the case study</a>
     </section>
 
     <section class="intro">
@@ -60,7 +75,7 @@
     <section class="latest-news" aria-labelledby="latest-news-heading">
       <div class="section-heading">
         <h3 id="latest-news-heading">Latest news</h3>
-        <a class="section-link" href="/blog/index.html">View all</a>
+        <a class="section-link" href="/blog/index.html">View all insights</a>
       </div>
       <div class="news-grid">
         <a class="news-card" href="/blog/conversation-driven-development.html">

@@ -1,8 +1,8 @@
-# The Bad Software Company - Blog
+# The Bad Software Company - Insights
 
 Source: https://badsoftware.com/blog/index.html
 
-Summary: Articles from The Bad Software Company.
+Summary: Articles, research, talks, and company news from The Bad Software Company.
 
 ## Posts
 

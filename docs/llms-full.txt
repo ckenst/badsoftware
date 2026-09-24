@@ -1,6 +1,6 @@
 # The Bad Software Company
 
-The Bad Software Company is a boutique systems-engineering advisory firm helping organizations understand and improve software quality, AI-assisted development, Developer Relations, and practical product delivery.
+The Bad Software Company starts with a TestOpsy to find the conditions making software unreliable, then helps teams move from findings to decisions and implementation.
 
 Canonical site: https://badsoftware.com/
 Sitemap: https://badsoftware.com/sitemap.xml
@@ -12,25 +12,21 @@ LLMS index: https://badsoftware.com/llms.txt
 Source: https://badsoftware.com/index.html
 Markdown: https://badsoftware.com/index.html.md
 
-The Bad Software Company is a boutique systems-engineering advisory firm focused on quality, AI, Developer Relations, and practical product engineering.
+Start with a TestOpsy to find the conditions making software unreliable, then move from findings to decisions and implementation.
 
 Software so bad, it's good.
 
-We help teams understand why software, AI systems, and engineering organizations fail—and what to do next.
+Start with a TestOpsy.
 
-Why Bad Software?
+When releases slow down, defects escape, or confidence drops, a TestOpsy examines the technical and organizational system behind the symptoms.
 
-Most teams know when quality is slipping. Releases get slower. Bugs escape. Tests become noisy. AI-generated code adds speed, but also uncertainty. Confidence drops.
+From findings to working changes
 
-The hard part is knowing why.
+Each service stands on its own. TestOpsy identifies failure modes, their causes, and the signals a team needs to monitor. Advisory helps leaders decide what to change and in what order. Implementation turns defined work into working improvements. When a problem crosses those boundaries, the services can connect.
 
-The Bad Software Company helps teams investigate the technical, organizational, and human systems behind software failure—so they can make better decisions, improve reliability, and build software they can trust.
+Proof in practice: Mailinator
 
-Consulting includes quality, AI, and Developer Relations work: product strategy, architecture reviews, training, speaking, and honest feedback.
-
-TestOpsy offers pragmatic testing strategies, test infrastructure, observability, and chaos testing to keep systems reliable.
-
-Design and build work includes full-stack development and rapid iteration.
+An outdated-documentation project exposed a missing API source of truth, broken endpoints, and four outdated SDKs. The work continued through specification, documentation, SDK repair, testing, publication, and measurement.
 
 Founder-led by Chris Kenst
 
@@ -48,39 +44,71 @@ The Bad Software Company helps organizations understand why software, AI systems
 
 We investigate the hidden assumptions, failure modes, organizational dynamics, and system behaviors that create unreliable products and false confidence.
 
-Through analysis, research, and advisory services, we help teams move beyond symptoms to address the underlying causes of bad software.
+A TestOpsy makes those conditions visible. Advisory and implementation help teams act on what the assessment finds.
 
 Our goal is simple: help organizations build software they can trust.
 
-### Services
-Source: https://badsoftware.com/services.html
-Markdown: https://badsoftware.com/services.html.md
+### TestOpsy
+Source: https://badsoftware.com/testopsy.html
+Markdown: https://badsoftware.com/testopsy.html.md
 
-Consulting, training, speaking, TestOpsy quality investigations, and full-stack design and build work.
+A structured assessment of the systems, processes, architecture, tooling, and feedback loops that shape software quality.
 
-The Bad Software Company is a boutique systems-engineering advisory firm.
-
-Consulting, training, and speaking help teams make better decisions about software quality, AI-assisted development, developer relations, and engineering systems.
-
-Engagements include advisory work, product and architecture reviews, hands-on workshops, team training, conference talks, and executive briefings.
+Find the conditions creating unreliable software.
 
 A TestOpsy is a forensic examination of a software project's quality DNA.
 
-A TestOpsy investigates the systems, processes, architecture, tooling, and feedback loops that shape software quality.
+It investigates the system behind production defects, slow releases, unreliable tests, flaky pipelines, and declining confidence in deployments.
 
-The three pillars of a TestOpsy are failure mode analysis, cause of failure investigation, and quality observability.
+The assessment examines failure modes, causes of failure, and quality observability rather than stopping at individual bugs.
 
-Deliverables include current-state quality assessment, risk and failure mode analysis, findings report with prioritized recommendations, executive summary, and follow-up review session.
+Deliverables include a current-state quality assessment, risk and failure mode analysis, prioritized recommendations, an executive summary, and a follow-up review.
 
-Design and build work helps teams move from idea to working software with practical product design, full-stack implementation, and fast feedback loops.
+What happens after a TestOpsy?
 
-### Contact
+The findings can stand on their own. When a team needs more help, Advisory supports decisions and sequencing, while Implementation turns the selected recommendations into working changes.
+
+### Advisory
+Source: https://badsoftware.com/advisory.html
+Markdown: https://badsoftware.com/advisory.html.md
+
+Evidence-based guidance for deciding what to change, what to defer, and how to measure whether the response is working.
+
+Turn findings into decisions.
+
+Advisory is a standalone service. It helps teams interpret what they are seeing, choose a response, sequence the work, and define useful feedback.
+
+Work can include quality and testing strategy, product and architecture reviews, AI-assisted development, Developer Relations, workshops, training, conference talks, and executive briefings.
+
+### Implementation
+Source: https://badsoftware.com/implementation.html
+Markdown: https://badsoftware.com/implementation.html.md
+
+Hands-on engineering that turns assessed problems and prioritized recommendations into working software and maintainable systems.
+
+Turn the plan into working changes.
+
+Implementation is a standalone service. It can begin with a defined project or carry selected recommendations into documentation, API contracts, SDKs and integrations, automated tests, test infrastructure, observability, prototypes, internal tools, and customer-facing applications.
+
+The Mailinator work moved through this full loop: investigation revealed connected documentation and product problems, an OpenAPI specification established a source of truth, and four SDKs were brought back into alignment.
+
+### How We Help
+Source: https://badsoftware.com/services.html
+Markdown: https://badsoftware.com/services.html.md
+
+An overview of the path from TestOpsy assessment through Advisory and hands-on Implementation.
+
+Three standalone services. One connected way to solve wider problems.
+
+Hire any service directly. When the problem crosses boundaries, a TestOpsy can identify the conditions behind unreliable software, Advisory can help choose and sequence a response, and Implementation can turn defined work into working changes.
+
+### Discuss a TestOpsy
 Source: https://badsoftware.com/contact.html
 Markdown: https://badsoftware.com/contact.html.md
 
-Contact The Bad Software Company about advisory or build work.
+Request a free 30-minute fit call to discuss what you are seeing and whether a TestOpsy is the right next step.
 
-Contact The Bad Software Company at hello@badsoftware.com.
+Request a free 30-minute fit call. We will discuss what you are seeing, whether a TestOpsy is appropriate, and the best next step.
 
 ## Case Studies
 
@@ -212,7 +240,7 @@ The documentation problem was where the maintenance gap became visible. Establis
 - [Python SDK](https://github.com/manybrain/mailinator-python-client) and [PyPI package](https://pypi.org/project/mailinator-python-client-2/)
 - [C# SDK](https://github.com/manybrain/mailinator-csharp-client) and [NuGet package](https://www.nuget.org/packages/MailinatorApiClient)
 
-## Blog Posts
+## Insight Articles
 
 ### Conversation Driven Development
 Source: https://badsoftware.com/blog/conversation-driven-development.html
