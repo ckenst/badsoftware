@@ -1,21 +1,9 @@
-# The Bad Software Company - Services
+# The Bad Software Company - How We Help
 
 Source: https://badsoftware.com/services.html
 
-Summary: Consulting, training, speaking, TestOpsy quality investigations, and full-stack design and build work.
+Summary: An overview of the path from TestOpsy assessment through Advisory and hands-on Implementation.
 
-The Bad Software Company is a boutique systems-engineering advisory firm.
+Three standalone services. One connected way to solve wider problems.
 
-Consulting, training, and speaking help teams make better decisions about software quality, AI-assisted development, developer relations, and engineering systems.
-
-Engagements include advisory work, product and architecture reviews, hands-on workshops, team training, conference talks, and executive briefings.
-
-A TestOpsy is a forensic examination of a software project's quality DNA.
-
-A TestOpsy investigates the systems, processes, architecture, tooling, and feedback loops that shape software quality.
-
-The three pillars of a TestOpsy are failure mode analysis, cause of failure investigation, and quality observability.
-
-Deliverables include current-state quality assessment, risk and failure mode analysis, findings report with prioritized recommendations, executive summary, and follow-up review session.
-
-Design and build work helps teams move from idea to working software with practical product design, full-stack implementation, and fast feedback loops.
+Hire any service directly. When the problem crosses boundaries, a TestOpsy can identify the conditions behind unreliable software, Advisory can help choose and sequence a response, and Implementation can turn defined work into working changes.

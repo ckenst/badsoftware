@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
-"""
-Build blog posts from text files in posts/ directory.
-Converts text files to HTML blog posts and updates the blog index.
-"""
+"""Build the static blog, case studies, and machine-readable site indexes."""
 
 import re
 import xml.etree.ElementTree as ET
@@ -33,39 +30,32 @@ STATIC_PAGES = [
         'path': 'index.html',
         'title': 'Home',
         'description': (
-            'The Bad Software Company is a boutique systems-engineering advisory '
-            'firm focused on quality, AI, Developer Relations, and practical '
-            'product engineering.'
+            'Start with a TestOpsy to find the conditions making software '
+            'unreliable, then move from findings to decisions and implementation.'
         ),
         'content': [
             "Software so bad, it's good.",
+            'Start with a TestOpsy.',
             (
-                'We help teams understand why software, AI systems, and '
-                'engineering organizations fail—and what to do next.'
+                'When releases slow down, defects escape, or confidence drops, '
+                'a TestOpsy examines the technical and organizational system '
+                'behind the symptoms.'
             ),
-            'Why Bad Software?',
+            'From findings to working changes',
             (
-                'Most teams know when quality is slipping. Releases get slower. '
-                'Bugs escape. Tests become noisy. AI-generated code adds speed, '
-                'but also uncertainty. Confidence drops.'
+                'Each service stands on its own. TestOpsy identifies failure '
+                'modes, their causes, and the signals a team needs to monitor. '
+                'Advisory helps leaders decide what to change and in what order. '
+                'Implementation turns defined work into working improvements. '
+                'When a problem crosses those boundaries, the services can connect.'
             ),
-            'The hard part is knowing why.',
+            'Proof in practice: Mailinator',
             (
-                'The Bad Software Company helps teams investigate the technical, '
-                'organizational, and human systems behind software failure—so '
-                'they can make better decisions, improve reliability, and build '
-                'software they can trust.'
+                'An outdated-documentation project exposed a missing API source '
+                'of truth, broken endpoints, and four outdated SDKs. The work '
+                'continued through specification, documentation, SDK repair, '
+                'testing, publication, and measurement.'
             ),
-            (
-                'Consulting includes quality, AI, and Developer Relations work: '
-                'product strategy, architecture reviews, training, speaking, and '
-                'honest feedback.'
-            ),
-            (
-                'TestOpsy offers pragmatic testing strategies, test infrastructure, '
-                'observability, and chaos testing to keep systems reliable.'
-            ),
-            'Design and build work includes full-stack development and rapid iteration.',
             'Founder-led by Chris Kenst',
             (
                 'The Bad Software Company is founded by Chris Kenst '
@@ -101,61 +91,145 @@ STATIC_PAGES = [
                 'false confidence.'
             ),
             (
-                'Through analysis, research, and advisory services, we help teams '
-                'move beyond symptoms to address the underlying causes of bad software.'
+                'A TestOpsy makes those conditions visible. Advisory and '
+                'implementation help teams act on what the assessment finds.'
             ),
             'Our goal is simple: help organizations build software they can trust.',
         ],
     },
     {
-        'path': 'services.html',
-        'title': 'Services',
+        'path': 'testopsy.html',
+        'title': 'TestOpsy',
         'description': (
-            'Consulting, training, speaking, TestOpsy quality investigations, '
-            'and full-stack design and build work.'
+            'A structured assessment of the systems, processes, architecture, '
+            'tooling, and feedback loops that shape software quality.'
         ),
         'content': [
-            'The Bad Software Company is a boutique systems-engineering advisory firm.',
-            (
-                'Consulting, training, and speaking help teams make better decisions '
-                'about software quality, AI-assisted development, developer relations, '
-                'and engineering systems.'
-            ),
-            (
-                'Engagements include advisory work, product and architecture reviews, '
-                'hands-on workshops, team training, conference talks, and executive '
-                'briefings.'
-            ),
+            'Find the conditions creating unreliable software.',
             'A TestOpsy is a forensic examination of a software project\'s quality DNA.',
             (
-                'A TestOpsy investigates the systems, processes, architecture, tooling, '
-                'and feedback loops that shape software quality.'
+                'It investigates the system behind production defects, slow '
+                'releases, unreliable tests, flaky pipelines, and declining '
+                'confidence in deployments.'
             ),
             (
-                'The three pillars of a TestOpsy are failure mode analysis, cause of '
-                'failure investigation, and quality observability.'
+                'The assessment examines failure modes, causes of failure, and '
+                'quality observability rather than stopping at individual bugs.'
             ),
             (
-                'Deliverables include current-state quality assessment, risk and '
-                'failure mode analysis, findings report with prioritized recommendations, '
-                'executive summary, and follow-up review session.'
+                'Deliverables include a current-state quality assessment, risk '
+                'and failure mode analysis, prioritized recommendations, an '
+                'executive summary, and a follow-up review.'
+            ),
+            'What happens after a TestOpsy?',
+            (
+                'The findings can stand on their own. When a team needs more help, '
+                'Advisory supports decisions and sequencing, while Implementation '
+                'turns the selected recommendations into working changes.'
+            ),
+        ],
+    },
+    {
+        'path': 'advisory.html',
+        'title': 'Advisory',
+        'description': (
+            'Evidence-based guidance for deciding what to change, what to defer, '
+            'and how to measure whether the response is working.'
+        ),
+        'content': [
+            'Turn findings into decisions.',
+            (
+                'Advisory is a standalone service. It helps teams interpret what '
+                'they are seeing, choose a response, sequence the work, and define '
+                'useful feedback.'
             ),
             (
-                'Design and build work helps teams move from idea to working software '
-                'with practical product design, full-stack implementation, and fast '
-                'feedback loops.'
+                'Work can include quality and testing strategy, product and '
+                'architecture reviews, AI-assisted development, Developer '
+                'Relations, workshops, training, conference talks, and executive '
+                'briefings.'
+            ),
+        ],
+    },
+    {
+        'path': 'implementation.html',
+        'title': 'Implementation',
+        'description': (
+            'Hands-on engineering that turns assessed problems and prioritized '
+            'recommendations into working software and maintainable systems.'
+        ),
+        'content': [
+            'Turn the plan into working changes.',
+            (
+                'Implementation is a standalone service. It can begin with a '
+                'defined project or carry selected recommendations into '
+                'documentation, API contracts, SDKs and integrations, automated '
+                'tests, test infrastructure, observability, prototypes, internal '
+                'tools, and customer-facing applications.'
+            ),
+            (
+                'The Mailinator work moved through this full loop: investigation '
+                'revealed connected documentation and product problems, an OpenAPI '
+                'specification established a source of truth, and four SDKs were '
+                'brought back into alignment.'
+            ),
+        ],
+    },
+    {
+        'path': 'services.html',
+        'title': 'How We Help',
+        'description': (
+            'An overview of the path from TestOpsy assessment through Advisory '
+            'and hands-on Implementation.'
+        ),
+        'content': [
+            'Three standalone services. One connected way to solve wider problems.',
+            (
+                'Hire any service directly. When the problem crosses boundaries, '
+                'a TestOpsy can identify the conditions behind unreliable software, '
+                'Advisory can help choose and sequence a response, and Implementation '
+                'can turn defined work into working changes.'
             ),
         ],
     },
     {
         'path': 'contact.html',
-        'title': 'Contact',
-        'description': 'Contact The Bad Software Company about advisory or build work.',
+        'title': 'Discuss a TestOpsy',
+        'description': (
+            'Request a free 30-minute fit call to discuss what you are seeing and '
+            'whether a TestOpsy is the right next step.'
+        ),
         'content': [
-            'Contact The Bad Software Company at hello@badsoftware.com.',
+            (
+                'Request a free 30-minute fit call. We will discuss what you are '
+                'seeing, whether a TestOpsy is appropriate, and the best next step.'
+            ),
         ],
     },
 ]
+
+
+def navigation_html():
+    """Return the shared primary navigation."""
+    return '''      <nav>
+        <a href="/testopsy.html">TestOpsy</a>
+        <a href="/advisory.html">Advisory</a>
+        <a href="/implementation.html">Implementation</a>
+        <a href="/case-studies/index.html">Case Studies</a>
+        <a href="/blog/index.html">Insights</a>
+        <a href="/about.html">About</a>
+        <a class="nav-cta" href="/contact.html">Discuss a TestOpsy</a>
+      </nav>'''
+
+
+def site_header_html():
+    """Return the shared site header used by generated pages."""
+    return f'''  <header class="site-header">
+    <div class="container">
+      <h1 class="logo"><a href="/index.html" aria-label="The Bad Software Company home"><img class="logo-light" src="/assets/logos/light_background.png" alt="The Bad Software Company"><img class="logo-dark" src="/assets/logos/dark_background.png" alt="The Bad Software Company"></a></h1>
+{navigation_html()}
+    </div>
+  </header>'''
 
 
 def absolute_url(path):
@@ -227,6 +301,139 @@ def parse_post(content):
             metadata[key.strip()] = value.strip()
     
     return metadata, body.strip()
+
+
+def parse_case_study(content, source_file):
+    """Extract case-study metadata from its Markdown source."""
+    lines = content.splitlines()
+    if not lines or not lines[0].startswith('# '):
+        raise ValueError(f"{source_file}: case study must start with an H1 title")
+
+    title = lines[0][2:].strip()
+    summary = next((line.strip() for line in lines[1:] if line.strip()), '')
+    slug = source_file.stem
+    validate_slug(slug, source_file)
+
+    return {
+        'title': title,
+        'summary': summary,
+        'slug': slug,
+        'body': content.strip(),
+    }
+
+
+def render_markdown_inline(text):
+    """Render the small inline Markdown subset used by case studies."""
+    rendered = escape(text, quote=False)
+    rendered = re.sub(
+        r'\[([^\]]+)\]\((https?://[^)]+)\)',
+        lambda match: (
+            f'<a href="{escape(match.group(2), quote=True)}" '
+            f'target="_blank" rel="noopener">{match.group(1)}</a>'
+        ),
+        rendered,
+    )
+    return re.sub(r'\*\*([^*]+)\*\*', r'<strong>\1</strong>', rendered)
+
+
+def is_table_separator(line):
+    """Return whether a Markdown table row is the header separator."""
+    cells = [cell.strip() for cell in line.strip().strip('|').split('|')]
+    return bool(cells) and all(re.fullmatch(r':?-{3,}:?', cell) for cell in cells)
+
+
+def render_case_study_markdown(content):
+    """Render the block Markdown subset used by case-study source files."""
+    lines = content.splitlines()
+    rendered = []
+    index = 0
+
+    while index < len(lines):
+        line = lines[index].strip()
+        if not line:
+            index += 1
+            continue
+
+        heading = re.match(r'^(#{1,3})\s+(.+)$', line)
+        if heading:
+            level = len(heading.group(1))
+            rendered.append(
+                f'<h{level}>{render_markdown_inline(heading.group(2))}</h{level}>'
+            )
+            index += 1
+            continue
+
+        if (
+            line.startswith('|')
+            and index + 1 < len(lines)
+            and is_table_separator(lines[index + 1])
+        ):
+            headers = [
+                cell.strip() for cell in line.strip('|').split('|')
+            ]
+            index += 2
+            rows = []
+            while index < len(lines) and lines[index].strip().startswith('|'):
+                rows.append([
+                    cell.strip()
+                    for cell in lines[index].strip().strip('|').split('|')
+                ])
+                index += 1
+
+            header_html = ''.join(
+                f'<th scope="col">{render_markdown_inline(cell)}</th>'
+                for cell in headers
+            )
+            rows_html = ''.join(
+                '<tr>' + ''.join(
+                    f'<td>{render_markdown_inline(cell)}</td>' for cell in row
+                ) + '</tr>'
+                for row in rows
+            )
+            rendered.append(
+                '<div class="case-study-table-wrap"><table class="case-study-table">'
+                f'<thead><tr>{header_html}</tr></thead><tbody>{rows_html}</tbody>'
+                '</table></div>'
+            )
+            continue
+
+        unordered = line.startswith('- ')
+        ordered = bool(re.match(r'^\d+\.\s+', line))
+        if unordered or ordered:
+            tag = 'ul' if unordered else 'ol'
+            items = []
+            pattern = r'^-\s+' if unordered else r'^\d+\.\s+'
+            while index < len(lines):
+                candidate = lines[index].strip()
+                if not re.match(pattern, candidate):
+                    break
+                items.append(re.sub(pattern, '', candidate))
+                index += 1
+            items_html = ''.join(
+                f'<li>{render_markdown_inline(item)}</li>' for item in items
+            )
+            rendered.append(f'<{tag}>{items_html}</{tag}>')
+            continue
+
+        paragraph_lines = [line]
+        index += 1
+        while index < len(lines):
+            candidate = lines[index].strip()
+            if (
+                not candidate
+                or re.match(r'^#{1,3}\s+', candidate)
+                or candidate.startswith('|')
+                or candidate.startswith('- ')
+                or re.match(r'^\d+\.\s+', candidate)
+            ):
+                break
+            paragraph_lines.append(candidate)
+            index += 1
+        rendered.append(
+            f'<p>{render_markdown_inline(" ".join(paragraph_lines))}</p>'
+        )
+
+    return '\n        '.join(rendered)
 
 
 def format_date(date_str):
@@ -303,28 +510,17 @@ def generate_html(metadata, content, slug):
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="{excerpt_html}">
-  <title>{title_html} — The Bad Software Company Blog</title>
+  <title>{title_html} — The Bad Software Company Insights</title>
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/style.css">
 <script src="/assets/theme.js" defer></script>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container">
-      <h1 class="logo"><a href="/index.html" aria-label="The Bad Software Company home"><img class="logo-light" src="/assets/logos/light_background.png" alt="The Bad Software Company"><img class="logo-dark" src="/assets/logos/dark_background.png" alt="The Bad Software Company"></a></h1>
-      <nav>
-        <a href="/index.html">Home</a>
-        <a href="/about.html">About</a>
-        <a href="/services.html">Services</a>
-        <a href="/blog/index.html">Blog</a>
-        <a href="/contact.html">Contact Us</a>
-      </nav>
-    </div>
-  </header>
+{site_header_html()}
 
   <main class="container">
     <article class="blog-post">
-      <p><a href="/blog/index.html">&larr; Back to blog</a></p>
+      <p><a href="/blog/index.html">&larr; Back to insights</a></p>
       <h2>{title_html}</h2>
       <p class="blog-meta">Published {formatted_date}</p>
       {tags_html}
@@ -344,7 +540,7 @@ def generate_html(metadata, content, slug):
 
 
 def generate_index(posts):
-    """Generate the blog index HTML."""
+    """Generate the insights index HTML."""
     # Sort posts by date (newest first)
     sorted_posts = sorted(posts, key=lambda p: p['date'], reverse=True)
     
@@ -369,30 +565,19 @@ def generate_index(posts):
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Blog — The Bad Software Company</title>
+  <title>Insights — The Bad Software Company</title>
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/style.css">
 <script src="/assets/theme.js" defer></script>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container">
-      <h1 class="logo"><a href="/index.html" aria-label="The Bad Software Company home"><img class="logo-light" src="/assets/logos/light_background.png" alt="The Bad Software Company"><img class="logo-dark" src="/assets/logos/dark_background.png" alt="The Bad Software Company"></a></h1>
-      <nav>
-        <a href="/index.html">Home</a>
-        <a href="/about.html">About</a>
-        <a href="/services.html">Services</a>
-        <a href="/blog/index.html">Blog</a>
-        <a href="/contact.html">Contact Us</a>
-      </nav>
-    </div>
-  </header>
+{site_header_html()}
 
   <main class="container">
-    <h2>Blog</h2>
-    <p id="blog-intro">The latest from The Bad Software Company:</p>
+    <h2>Insights</h2>
+    <p id="blog-intro">Articles, research, talks, and company news from The Bad Software Company.</p>
 
-    <section class="blog-list" aria-label="Blog posts">
+    <section class="blog-list" aria-label="Insight articles">
 {cards_html}
     </section>
   </main>
@@ -427,6 +612,85 @@ def generate_index(posts):
 '''
 
 
+def generate_case_study_html(case_study):
+    """Generate a public HTML page for one case study."""
+    title = escape(case_study['title'], quote=False)
+    summary = escape(case_study['summary'], quote=True)
+    rendered_body = render_case_study_markdown(case_study['body'])
+
+    return f'''<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="{summary}">
+  <title>{title} — The Bad Software Company Case Studies</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/style.css">
+<script src="/assets/theme.js" defer></script>
+</head>
+<body>
+{site_header_html()}
+
+  <main class="container">
+    <article class="case-study-detail">
+      <p><a href="/case-studies/index.html">&larr; Back to case studies</a></p>
+      {rendered_body}
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 The Bad Software Company</p>
+    </div>
+  </footer>
+</body>
+</html>
+'''
+
+
+def generate_case_studies_index(case_studies):
+    """Generate the public case-studies index."""
+    cards = []
+    for case_study in case_studies:
+        cards.append(f'''      <article class="case-study-card">
+        <h3><a href="/case-studies/{quote(case_study['slug'])}.html">{escape(case_study['title'], quote=False)}</a></h3>
+        <p>{escape(case_study['summary'], quote=False)}</p>
+        <a class="section-link" href="/case-studies/{quote(case_study['slug'])}.html">Read the case study</a>
+      </article>''')
+
+    return f'''<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Case studies from The Bad Software Company.">
+  <title>Case Studies — The Bad Software Company</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/style.css">
+<script src="/assets/theme.js" defer></script>
+</head>
+<body>
+{site_header_html()}
+
+  <main class="container">
+    <h2>Case Studies</h2>
+    <p>How investigation becomes recommendations, working changes, and measurable results in real software systems.</p>
+    <section class="case-study-list" aria-label="Case studies">
+{chr(10).join(cards)}
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 The Bad Software Company</p>
+    </div>
+  </footer>
+</body>
+</html>
+'''
+
+
 def markdown_header(title, source_path, description=None):
     """Generate common metadata for Markdown mirrors."""
     lines = [
@@ -452,11 +716,11 @@ def generate_static_markdown(page):
 
 
 def generate_blog_index_markdown(posts):
-    """Generate a Markdown mirror for the blog index."""
+    """Generate a Markdown mirror for the insights index."""
     lines = markdown_header(
-        'The Bad Software Company - Blog',
+        'The Bad Software Company - Insights',
         'blog/index.html',
-        'Articles from The Bad Software Company.',
+        'Articles, research, talks, and company news from The Bad Software Company.',
     )
     lines.append('## Posts')
 
@@ -476,7 +740,7 @@ def generate_post_markdown(post):
     title = post['title']
     source_path = f"blog/{post['slug']}.html"
     lines = markdown_header(
-        f"The Bad Software Company Blog - {title}",
+        f"The Bad Software Company Insights - {title}",
         source_path,
         post['excerpt'],
     )
@@ -493,7 +757,37 @@ def generate_post_markdown(post):
     return '\n\n'.join(lines).strip() + '\n'
 
 
-def generate_markdown_mirrors(posts):
+def generate_case_studies_index_markdown(case_studies):
+    """Generate a Markdown mirror for the case-studies index."""
+    lines = markdown_header(
+        'The Bad Software Company - Case Studies',
+        'case-studies/index.html',
+        'Case studies from The Bad Software Company.',
+    )
+    lines.append('## Case Studies')
+    for case_study in case_studies:
+        case_path = markdown_path(
+            f"case-studies/{case_study['slug']}.html"
+        )
+        lines.append(
+            f"- [{markdown_inline(case_study['title'])}]({absolute_url(case_path)}): "
+            f"{markdown_inline(case_study['summary'])}"
+        )
+    return '\n\n'.join(lines).strip() + '\n'
+
+
+def generate_case_study_markdown(case_study):
+    """Generate a canonical Markdown mirror for one case study."""
+    lines = markdown_header(
+        f"The Bad Software Company Case Study - {case_study['title']}",
+        f"case-studies/{case_study['slug']}.html",
+        case_study['summary'],
+    )
+    lines.append(case_study['body'])
+    return '\n\n'.join(lines).strip() + '\n'
+
+
+def generate_markdown_mirrors(posts, case_studies):
     """Generate Markdown mirrors next to the published HTML pages."""
     for page in STATIC_PAGES:
         output_file = Path('docs') / markdown_path(page['path'])
@@ -512,6 +806,21 @@ def generate_markdown_mirrors(posts):
             f.write(generate_post_markdown(post))
         print(f"Generated {post_file}")
 
+    case_studies_dir = Path('docs/case-studies')
+    case_studies_dir.mkdir(parents=True, exist_ok=True)
+    case_index_file = Path('docs') / markdown_path('case-studies/index.html')
+    with open(case_index_file, 'w', encoding='utf-8') as f:
+        f.write(generate_case_studies_index_markdown(case_studies))
+    print(f"Generated {case_index_file}")
+
+    for case_study in case_studies:
+        case_file = Path('docs') / markdown_path(
+            f"case-studies/{case_study['slug']}.html"
+        )
+        with open(case_file, 'w', encoding='utf-8') as f:
+            f.write(generate_case_study_markdown(case_study))
+        print(f"Generated {case_file}")
+
 
 def sitemap_entry(parent, path, lastmod=None):
     """Add a URL entry to the sitemap."""
@@ -524,7 +833,7 @@ def sitemap_entry(parent, path, lastmod=None):
         lastmod_element.text = lastmod
 
 
-def generate_sitemap(posts):
+def generate_sitemap(posts, case_studies):
     """Generate XML sitemap content for the static site and blog posts."""
     urlset = ET.Element(
         'urlset',
@@ -538,6 +847,8 @@ def generate_sitemap(posts):
 
     sitemap_entry(urlset, 'blog/index.html', latest_post_date)
     sitemap_entry(urlset, markdown_path('blog/index.html'), latest_post_date)
+    sitemap_entry(urlset, 'case-studies/index.html')
+    sitemap_entry(urlset, markdown_path('case-studies/index.html'))
     sitemap_entry(urlset, 'llms.txt')
     sitemap_entry(urlset, 'llms-full.txt')
 
@@ -549,20 +860,24 @@ def generate_sitemap(posts):
             post['date'],
         )
 
+    for case_study in case_studies:
+        source_path = f"case-studies/{case_study['slug']}.html"
+        sitemap_entry(urlset, source_path)
+        sitemap_entry(urlset, markdown_path(source_path))
+
     rough_xml = ET.tostring(urlset, encoding='utf-8')
     pretty_xml = minidom.parseString(rough_xml).toprettyxml(indent='  ')
     return '\n'.join(line for line in pretty_xml.splitlines() if line.strip()) + '\n'
 
 
-def generate_llms_txt(posts):
+def generate_llms_txt(posts, case_studies):
     """Generate an llms.txt overview for AI agents and other text consumers."""
     lines = [
         '# The Bad Software Company',
         '',
         (
-            '> Boutique systems-engineering advisory firm helping organizations '
-            'understand and improve software quality, AI-assisted development, '
-            'Developer Relations, and practical product delivery.'
+            '> Start with a TestOpsy to find the conditions making software '
+            'unreliable, then move from findings to decisions and implementation.'
         ),
         '',
         'This file points agents to Markdown-friendly mirrors of the primary '
@@ -580,9 +895,23 @@ def generate_llms_txt(posts):
         )
 
     lines.extend([
-        f"- [Blog]({absolute_url(markdown_path('blog/index.html'))}): Articles from The Bad Software Company.",
+        f"- [Insights]({absolute_url(markdown_path('blog/index.html'))}): Articles, research, talks, and company news from The Bad Software Company.",
         '',
-        '## Blog Posts',
+        '## Case Studies',
+    ])
+
+    for case_study in case_studies:
+        case_path = markdown_path(
+            f"case-studies/{case_study['slug']}.html"
+        )
+        lines.append(
+            f"- [{markdown_inline(case_study['title'])}]({absolute_url(case_path)}): "
+            f"{markdown_inline(case_study['summary'])}"
+        )
+
+    lines.extend([
+        '',
+        '## Insight Articles',
     ])
 
     for post in sorted(posts, key=lambda p: p['date'], reverse=True):
@@ -604,16 +933,15 @@ def generate_llms_txt(posts):
     return '\n'.join(lines) + '\n'
 
 
-def generate_llms_full_txt(posts):
+def generate_llms_full_txt(posts, case_studies):
     """Generate a fuller single-file context bundle for AI agents."""
     lines = [
         '# The Bad Software Company',
         '',
         (
-            'The Bad Software Company is a boutique systems-engineering advisory '
-            'firm helping organizations understand and improve software quality, '
-            'AI-assisted development, Developer Relations, and practical product '
-            'delivery.'
+            'The Bad Software Company starts with a TestOpsy to find the conditions '
+            'making software unreliable, then helps teams move from findings to '
+            'decisions and implementation.'
         ),
         '',
         'Canonical site: https://badsoftware.com/',
@@ -635,7 +963,20 @@ def generate_llms_full_txt(posts):
             '\n\n'.join(markdown_text(content) for content in page.get('content', [])),
         ])
 
-    lines.extend(['', '## Blog Posts'])
+    lines.extend(['', '## Case Studies'])
+
+    for case_study in case_studies:
+        source_path = f"case-studies/{case_study['slug']}.html"
+        lines.extend([
+            '',
+            f"### {markdown_inline(case_study['title'])}",
+            f"Source: {absolute_url(source_path)}",
+            f"Markdown: {absolute_url(markdown_path(source_path))}",
+            '',
+            case_study['body'],
+        ])
+
+    lines.extend(['', '## Insight Articles'])
 
     for post in sorted(posts, key=lambda p: p['date'], reverse=True):
         post_source_path = f"blog/{post['slug']}.html"
@@ -665,15 +1006,18 @@ def generate_llms_full_txt(posts):
 
 
 def main():
-    """Build all blog posts from text files."""
+    """Build public blog and case-study pages."""
     posts_dir = Path('posts')
     blog_dir = Path('docs/blog')
+    case_studies_source_dir = Path('case-studies')
+    case_studies_output_dir = Path('docs/case-studies')
     
     if not posts_dir.exists():
         print("Error: posts/ directory not found")
         return
     
     blog_dir.mkdir(parents=True, exist_ok=True)
+    case_studies_output_dir.mkdir(parents=True, exist_ok=True)
     
     # Process all text files in posts/
     posts = []
@@ -720,22 +1064,45 @@ def main():
             f.write(index_html)
         print(f"\nGenerated blog index with {len(posts)} post(s)")
 
+    case_studies = []
+    for case_study_file in sorted(case_studies_source_dir.glob('*.md')):
+        print(f"Processing {case_study_file.name}...")
+        case_study = parse_case_study(
+            case_study_file.read_text(encoding='utf-8'),
+            case_study_file,
+        )
+        case_studies.append(case_study)
+
+        output_file = case_studies_output_dir / f"{case_study['slug']}.html"
+        output_file.write_text(
+            generate_case_study_html(case_study),
+            encoding='utf-8',
+        )
+        print(f"  → Generated {output_file}")
+
+    case_studies_index_file = case_studies_output_dir / 'index.html'
+    case_studies_index_file.write_text(
+        generate_case_studies_index(case_studies),
+        encoding='utf-8',
+    )
+    print(f"Generated case studies index with {len(case_studies)} case study/studies")
+
     sitemap_file = Path('docs/sitemap.xml')
     with open(sitemap_file, 'w', encoding='utf-8') as f:
-        f.write(generate_sitemap(posts))
+        f.write(generate_sitemap(posts, case_studies))
     print(f"Generated {sitemap_file}")
 
     llms_file = Path('docs/llms.txt')
     with open(llms_file, 'w', encoding='utf-8') as f:
-        f.write(generate_llms_txt(posts))
+        f.write(generate_llms_txt(posts, case_studies))
     print(f"Generated {llms_file}")
 
     llms_full_file = Path('docs/llms-full.txt')
     with open(llms_full_file, 'w', encoding='utf-8') as f:
-        f.write(generate_llms_full_txt(posts))
+        f.write(generate_llms_full_txt(posts, case_studies))
     print(f"Generated {llms_full_file}")
 
-    generate_markdown_mirrors(posts)
+    generate_markdown_mirrors(posts, case_studies)
     
     print("\nBuild complete!")
 

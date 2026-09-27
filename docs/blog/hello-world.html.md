@@ -1,4 +1,4 @@
-# The Bad Software Company Blog - Hello, world
+# The Bad Software Company Insights - Hello, world
 
 Source: https://badsoftware.com/blog/hello-world.html
 

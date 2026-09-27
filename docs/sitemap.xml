@@ -13,6 +13,24 @@
     <loc>https://badsoftware.com/about.html.md</loc>
   </url>
   <url>
+    <loc>https://badsoftware.com/testopsy.html</loc>
+  </url>
+  <url>
+    <loc>https://badsoftware.com/testopsy.html.md</loc>
+  </url>
+  <url>
+    <loc>https://badsoftware.com/advisory.html</loc>
+  </url>
+  <url>
+    <loc>https://badsoftware.com/advisory.html.md</loc>
+  </url>
+  <url>
+    <loc>https://badsoftware.com/implementation.html</loc>
+  </url>
+  <url>
+    <loc>https://badsoftware.com/implementation.html.md</loc>
+  </url>
+  <url>
     <loc>https://badsoftware.com/services.html</loc>
   </url>
   <url>
@@ -31,6 +49,12 @@
   <url>
     <loc>https://badsoftware.com/blog/index.html.md</loc>
     <lastmod>2026-06-18</lastmod>
+  </url>
+  <url>
+    <loc>https://badsoftware.com/case-studies/index.html</loc>
+  </url>
+  <url>
+    <loc>https://badsoftware.com/case-studies/index.html.md</loc>
   </url>
   <url>
     <loc>https://badsoftware.com/llms.txt</loc>
@@ -53,5 +77,11 @@
   <url>
     <loc>https://badsoftware.com/blog/hello-world.html.md</loc>
     <lastmod>2026-06-14</lastmod>
+  </url>
+  <url>
+    <loc>https://badsoftware.com/case-studies/mailinator-developer-experience.html</loc>
+  </url>
+  <url>
+    <loc>https://badsoftware.com/case-studies/mailinator-developer-experience.html.md</loc>
   </url>
 </urlset>
