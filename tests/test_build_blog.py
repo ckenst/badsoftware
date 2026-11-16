@@ -65,6 +65,17 @@ class SiteBuildTests(unittest.TestCase):
             self.assertIn('Project snapshot', detail_html)
             self.assertIn('Ruby', detail_html)
             self.assertIn('64.5%', detail_html)
+            self.assertIn('Release status as of November 12, 2026', detail_html)
+            self.assertIn('Follow-up measurement', detail_html)
+            self.assertIn('1.1.2', detail_html)
+            self.assertIn('1.0.9', detail_html)
+            self.assertIn('2.0.0', detail_html)
+            self.assertIn('65.9%', detail_html)
+            self.assertIn('5,576 downloads', detail_html)
+            self.assertNotIn(
+                "The C# release showed an early increase but had not been available long enough",
+                detail_html,
+            )
             self.assertIn('<title>Insights — The Bad Software Company</title>', blog_html)
             self.assertIn('<h2>Insights</h2>', blog_html)
             self.assertIn('Articles, research, talks, and company news', blog_html)

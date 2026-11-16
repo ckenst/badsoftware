@@ -129,7 +129,8 @@ Creating an API source of truth, modernizing four SDKs, and measuring adoption o
 | Period | 2025–2026 |
 | Scope | OpenAPI specification, developer documentation, examples, tests, and the Ruby, JavaScript, Python, and C# SDKs |
 | Initial condition | No current source of truth for the API; broken endpoints; outdated SDKs; inconsistent or missing examples |
-| Measured result | Ruby downloads increased 64.5%; JavaScript downloads increased 24.4%; recent downloads shifted toward the updated releases |
+| Initial measured result | Ruby downloads increased 64.5%; JavaScript downloads increased 24.4%; recent downloads shifted toward the updated releases |
+| Follow-up evidence | JavaScript growth continued; Python package downloads increased after 1.0.9; updated Ruby and C# releases continued to receive downloads |
 
 ## Executive summary
 
@@ -137,7 +138,7 @@ Mailinator's developer documentation was old, omitted product features, and coul
 
 That investigation found endpoints that were completely broken, behavior that had changed, and operations that no longer belonged in the public interface. It also showed that every official SDK was out of date. The clients exposed different subsets of the product, implemented some requests incorrectly, and offered examples that varied widely by language or were missing altogether.
 
-The work produced an OpenAPI specification for the Mailinator API, updated documentation, and modernization work across the Ruby, JavaScript, Python, and C# clients. After publication, Ruby and JavaScript showed the clearest evidence of adoption: their download rates increased, and most recent downloads moved to versions containing the new work.
+The work produced an OpenAPI specification for the Mailinator API, updated documentation, and modernization work across the Ruby, JavaScript, Python, and C# clients. In the initial post-release measurement, Ruby and JavaScript showed the clearest evidence of adoption: their download rates increased, and most recent downloads moved to versions containing the new work. A follow-up through November 12, 2026 found continued JavaScript growth, increased Python package activity, and continued downloads of the updated Ruby and C# releases.
 
 ## The challenge
 
@@ -205,7 +206,18 @@ The first published releases containing this work were:
 
 Additional releases expanded API coverage, improved tests and examples, and updated dependencies.
 
-### Evidence of adoption
+### Release status as of November 12, 2026
+
+| SDK | Latest release | Publication date | Releases containing this work |
+|---|---:|---:|---:|
+| JavaScript | 1.1.2 | August 15, 2026 | 6 |
+| Ruby | 1.1.1 | August 15, 2026 | 3 |
+| Python | 1.0.9 | August 15, 2026 | 2 |
+| C# | 2.0.0 | September 29, 2026 | 2 |
+
+These releases continued the alignment work. They added message retrieval, streaming, domain listing, and webhook operations; expanded offline and integration coverage; updated examples and maintenance guidance; and addressed dependency vulnerabilities. C# 2.0.0 also upgraded RestSharp across a public API boundary, requiring the major version change and migration guidance.
+
+### Initial post-release measurement
 
 Public package-registry data was compared across equal 90-day periods immediately before and after the first updated Ruby and JavaScript releases.
 
@@ -218,13 +230,30 @@ Ruby provided the clearest result. Its download rate increased almost 65%, and r
 
 JavaScript downloads increased approximately 24%. The package had already been growing, but its year-over-year growth also accelerated after the updated releases.
 
-The other clients did not provide the same evidence. Updated Python versions received downloads, but the package's overall download rate did not increase. The C# release showed an early increase but had not been available long enough for an equally strong comparison.
+At that point, the other clients did not provide the same evidence. Updated Python versions received downloads, but the package's overall download rate had not increased during the initial observation window. The first C# release had not been available long enough for an equally strong comparison.
+
+### Follow-up measurement
+
+Registry data was checked again on November 12, 2026. Each ecosystem exposes different statistics, so the follow-up separates comparable rate measurements from cumulative evidence of adoption.
+
+| SDK | Follow-up evidence | Result | What it supports |
+|---|---|---:|---|
+| JavaScript | August 14–November 11, 2026 compared with the same 90 days in 2025 | 6,667 vs. 3,221 downloads/day; **+107%** | Package growth continued year over year |
+| Python | Equal 88-day periods before and after 1.0.9, excluding release day | 188.2 vs. 312.2 downloads/day; **+65.9%** | Overall package activity increased after the release |
+| Ruby | Cumulative downloads of versions containing the work | 4,580 downloads; 1.1.1 received 1,933 | Updated releases continued to be adopted |
+| C# | Cumulative downloads of versions containing the work | 5,576 downloads across 1.0.7 and 2.0.0 | Updated releases were adopted |
+
+npm recorded 600,006 JavaScript package downloads in the 2026 follow-up window, compared with 289,911 over the same dates in 2025. This is evidence that the earlier growth did not disappear after the first updated releases, but it does not isolate the effect of any individual version.
+
+Python's result changes the initial picture. PyPIStats data excluding known mirrors increased from 16,562 downloads before 1.0.9 to 27,471 afterward. Because the counts are package-wide rather than version-specific, the comparison shows increased package activity after the release, not adoption of 1.0.9 itself.
+
+RubyGems and NuGet expose cumulative counts by version but not the historical daily version data needed to reconstruct equivalent before-and-after windows. Their totals show that developers downloaded the updated releases; they do not establish that the releases increased each package's overall rate.
 
 ## Measurement limits
 
-Package downloads are not unique users or API requests. Registry counts include automated builds, dependency scanners, repeated installations, and other activity that cannot be separated into individual developers. Timing alone also cannot prove that the SDK releases caused the download increases.
+Package downloads are not unique users or API requests. Registry counts include automated builds, dependency scanners, repeated installations, and other activity that cannot be separated into individual developers. PyPIStats excludes known mirrors but still includes CI/CD activity. npm reports package-wide downloads, while the RubyGems and NuGet figures used in the follow-up are cumulative version totals. Timing alone also cannot prove that the SDK releases caused the download increases.
 
-The data supports a narrower conclusion: developers adopted the repaired Ruby and JavaScript releases, and most recent downloads moved to versions containing the new work. That is evidence of distribution and version adoption, not proof of downstream Mailinator usage.
+The data supports a narrower conclusion: developers adopted the repaired releases; JavaScript growth continued; and Python package activity increased in the later comparison. That is evidence of distribution, package activity, and version adoption—not proof that the releases caused the changes or that package downloads became downstream Mailinator usage.
 
 ## End state
 
@@ -235,10 +264,10 @@ The documentation problem was where the maintenance gap became visible. Establis
 ## Evidence sources
 
 - [Mailinator API specification](https://github.com/manybrain/mailinatordocs/blob/main/openapi/mailinator-api.yaml)
-- [Ruby SDK](https://github.com/manybrain/mailinator-ruby-client) and [RubyGems package](https://rubygems.org/gems/mailinator_client)
-- [JavaScript SDK](https://github.com/manybrain/mailinator-javascript-client) and [npm package](https://www.npmjs.com/package/mailinator-client)
-- [Python SDK](https://github.com/manybrain/mailinator-python-client) and [PyPI package](https://pypi.org/project/mailinator-python-client-2/)
-- [C# SDK](https://github.com/manybrain/mailinator-csharp-client) and [NuGet package](https://www.nuget.org/packages/MailinatorApiClient)
+- [Ruby SDK](https://github.com/manybrain/mailinator-ruby-client), [changelog](https://github.com/manybrain/mailinator-ruby-client/blob/main/CHANGELOG.md), [RubyGems package](https://rubygems.org/gems/mailinator_client), and [version data](https://rubygems.org/api/v1/versions/mailinator_client.json)
+- [JavaScript SDK](https://github.com/manybrain/mailinator-javascript-client), [changelog](https://github.com/manybrain/mailinator-javascript-client/blob/master/CHANGELOG.md), [npm package](https://www.npmjs.com/package/mailinator-client), and npm download data for the [2026](https://api.npmjs.org/downloads/point/2026-08-14:2026-11-11/mailinator-client) and [2025](https://api.npmjs.org/downloads/point/2025-08-14:2025-11-11/mailinator-client) comparison periods
+- [Python SDK](https://github.com/manybrain/mailinator-python-client), [changelog](https://github.com/manybrain/mailinator-python-client/blob/master/CHANGELOG.md), [PyPI package](https://pypi.org/project/mailinator-python-client-2/), [PyPIStats data](https://pypistats.org/api/packages/mailinator-python-client-2/overall?mirrors=false), and [methodology](https://pypistats.org/faqs)
+- [C# SDK](https://github.com/manybrain/mailinator-csharp-client), [changelog](https://github.com/manybrain/mailinator-csharp-client/blob/master/CHANGELOG.md), [NuGet package](https://www.nuget.org/packages/MailinatorApiClient), and [version data](https://azuresearch-usnc.nuget.org/query?q=packageid%3AMailinatorApiClient&prerelease=false)
 
 ## Insight Articles
 
